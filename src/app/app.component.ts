@@ -7,4 +7,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'db_systems';
+
+  // todo Hana distinguish between admin and user here based on role
 }
