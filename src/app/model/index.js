@@ -6,6 +6,12 @@ mongoose.Promise = global.Promise;
 const db = {};
 db.mongoose = mongoose;
 db.url = dbConfig.url;
-db.library = require("./library.model.js")(mongoose);
+const { User, Book, BorrowedBook, Notification } = require("./library.model.js");
 
+// Assign the models to the db object
+db.User = User;
+db.Book = Book;
+db.BorrowedBook = BorrowedBook;
+db.Notification = Notification;
+ 
 module.exports = db;
