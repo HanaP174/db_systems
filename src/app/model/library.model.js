@@ -22,21 +22,27 @@ const User = mongoose.model(
   )
 );
 
-// Define the books model
-const Book = mongoose.model(
-  "books",
-  mongoose.Schema(
-    {
-      title: String,
-      author: String,
-      numberOfPages: Number,
-      year: Number,
-      cover: Buffer,
-      availableCopies: Number,
-      totalCopies: Number
-    },
-  )
+var schemaBooks = mongoose.Schema(
+  {
+    title: String,
+    author: String,
+    numberOfPages: Number,
+    year: Number,
+    cover: Buffer,
+    availableCopies: Number,
+    totalCopies: Number
+  }
 );
+
+schemaBooks.method("toJSON", function() {
+  const { __v, _id, ...object } = this.toObject();
+  object.id = _id;
+  return object;
+});
+
+const Book = mongoose.model("books", schemaBooks);
+
+
 
 // Define the borrowedBooks model
 const BorrowedBook = mongoose.model(
