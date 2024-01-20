@@ -1,0 +1,56 @@
+<header class="app-header">
+  <mat-icon class="icon" svgIcon="app-books"></mat-icon>
+</header>
+
+<div class="row">
+  <div class="col introduction-wrapper">
+    <div class="title">
+      Universe of Books
+    </div>
+    <div class="text">
+      Welcome to Universe of Books, your premier destination for an expansive collection of literature, knowledge, and
+      entertainment. Immerse yourself in a world of endless possibilities as you explore our vast online library,
+      carefully curated to cater to every reader's taste.
+    </div>
+    <div class="sub-title text">
+      Discover a Universe of Books
+    </div>
+    <div class="text">
+      Embark on a literary journey with our diverse selection of books spanning genres such as fiction, non-fiction,
+      mystery, romance, science fiction, and more. From timeless classics to contemporary bestsellers, our collection is
+      designed to captivate the minds of bibliophiles and casual readers alike.
+    </div>
+  </div>
+
+  <form class="col login-form" [formGroup]="formLogin">
+    <div class="login-wrapper">
+      <mat-card>
+        <mat-card-content>
+          <div>
+            <mat-form-field class="input-field" appearance="outline">
+              <mat-error *ngIf="formLogin.get('username')?.hasError('required')">Username is required</mat-error>
+              <mat-label>Username</mat-label>
+              <input matInput formControlName="username" required>
+            </mat-form-field>
+            <mat-form-field class="input-field" appearance="outline">
+              <mat-error *ngIf="formLogin.get('password')?.hasError('required')">Password is required</mat-error>
+              <mat-label>Password</mat-label>
+              <input [type]="hide ? 'password' : 'text'" matInput formControlName="password" required/>
+              <button mat-icon-button matSuffix (click)="hide = !hide"
+                      [attr.aria-label]="'Hide password'"
+                      [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div class="registration-link">
+            <a mat-button routerLink="/sign-up">Sign up</a>
+          </div>
+          <div class="login-button">
+            <button mat-raised-button color="primary" [disabled]="!formLogin.valid">Log in</button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </form>
+</div>

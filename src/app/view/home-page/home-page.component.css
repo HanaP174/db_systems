@@ -1,0 +1,55 @@
+
+.app-header {
+  height: 5rem;
+  width: auto;
+  background-color: #3f51b5;
+}
+
+.icon {
+  height: 5rem;
+  width: 5rem;
+}
+
+.introduction-wrapper {
+  margin-left: 3rem;
+}
+
+.title {
+  margin-top: 5rem;
+  color: black;
+  line-height: 2rem;
+  font-size: 2rem;
+}
+
+.text {
+  padding-top: 1rem;
+  color: black;
+  line-height: 1.2rem;
+  font-size: 1.2rem;
+  text-align: justify;
+}
+
+.sub-title {
+  padding-top: 1.5rem;
+  font-weight: bold;
+}
+
+.login-wrapper {
+  margin-top: 5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.login-form {
+  height: 100%;
+  width: 50%;
+}
+
+.registration-link {
+  text-align: center;
+  padding-bottom: 0.5rem;
+}
+
+.input-field {
+  width: 100%;
+}

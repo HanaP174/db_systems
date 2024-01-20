@@ -1,26 +1,24 @@
 const mongoose = require('mongoose');
 
-// Define the users model
-const User = mongoose.model(
-  "users",
-  mongoose.Schema(
-    {
-      name: String,
-      surname: String,
-      role: String,
-      birthNumber: String,
-      address: {
-        street: String,
-        zipcode: String,
-        city: String,
-        streetNumber: String
-      },
-      userName: String,
-      password: String,
-      activated: Boolean
+const userSchema = mongoose.Schema(
+  {
+    name: String,
+    surname: String,
+    role: String,
+    birthNumber: String,
+    address: {
+      street: String,
+      zipcode: String,
+      city: String,
+      streetNumber: String
     },
-  )
-);
+    userName: {type: String, required: true},
+    password: {type: String, required: true},
+    activated: Boolean
+  });
+
+// Define the users model
+const User = mongoose.model("users", userSchema);
 
 var schemaBooks = mongoose.Schema(
   {
@@ -41,8 +39,6 @@ schemaBooks.method("toJSON", function() {
 });
 
 const Book = mongoose.model("books", schemaBooks);
-
-
 
 // Define the borrowedBooks model
 const BorrowedBook = mongoose.model(
