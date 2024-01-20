@@ -1,4 +1,4 @@
-const dbConfig = require("../db.config.js");
+const dbConfig = require("../../db.config.js");
 
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
@@ -13,5 +13,5 @@ db.User = User;
 db.Book = Book;
 db.BorrowedBook = BorrowedBook;
 db.Notification = Notification;
- 
+
 module.exports = db;

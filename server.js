@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // set routes
-const ROUTES = require("./src/app/routes/book.routes");
+const ROUTES = require("./src/app/shared/routes/book.routes");
 app.use('/api/library', ROUTES);
 
 // set port, listen for requests
@@ -25,7 +25,7 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
-const db = require("./src/app/model");
+const db = require("./src/app/shared/model");
 db.mongoose
   .connect(db.url, {
     useNewUrlParser: true,
