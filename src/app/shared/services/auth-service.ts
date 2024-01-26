@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Subject} from "rxjs";
-import {User} from "../model/LibraryModel";
+import {User, UserAuth} from "../model/LibraryModel";
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -22,17 +22,14 @@ export class AuthService {
   constructor(private httpClient: HttpClient) {}
 
   // todo
-  signupUser(username: string, password: string){
-
-    const authData: User = {username: username, password: password};
-
-    this.httpClient.post('http://localhost:8080/sign-up/', authData).subscribe(res => {
+  signUpUser(user: User){
+    this.httpClient.post('http://localhost:8080/signUp/', user).subscribe(res => {
       console.log(res);
     })
   }
 
   loginUser(username: string, password: string) {
-    const user: User = {username: username, password: password};
+    const user: UserAuth = {username: username, password: password};
 
     this.httpClient.post<{token: string}>('http://localhost:8080/login', user).subscribe(response => {
       this._token = response.token;
