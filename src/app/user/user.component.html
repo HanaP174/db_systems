@@ -9,7 +9,11 @@
     </button>
   </mat-menu>
 </app-header>
-<div class="not-activated">
+<div class="not-activated" *ngIf="!user.activated; else activated">
   <span>Your account has to be activated by Admin to enjoy the Book Universe. Please wait.</span>
 </div>
+
+<ng-template #activated>
+  <app-books-view></app-books-view>
+</ng-template>
 
