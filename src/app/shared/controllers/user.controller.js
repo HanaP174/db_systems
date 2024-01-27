@@ -17,7 +17,7 @@ exports.signUp = async function (req, res) {
       street: req.body.street,
       streetNumber: req.body.streetNumber,
       zipcode: req.body.zipcode,
-      city: req.city.zipcode,
+      city: req.body.city,
     },
     role: "USER"
   });
@@ -55,11 +55,17 @@ exports.login = async (req, res) => {
       userFound = user
       return req.body.password === user.password;
     })
-    .then(() => {
+    .then(result => {
+      if(!result){
+        return res.status(401).json({
+          message: 'Password is incorrect'
+        })
+      }
       const token = jwt.sign({username: userFound.username, userId: userFound._id}, "secret_string", {expiresIn:"1h"})
       return res.status(200).json({
         token: token,
-        expiresIn: 3600
+        expiresIn: 3600,
+        user: userFound
       })
     })
     .catch(() => {

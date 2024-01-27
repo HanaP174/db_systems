@@ -45,7 +45,7 @@
             <a mat-button routerLink="/sign-up">Sign up</a>
           </div>
           <div class="login-button">
-            <button mat-raised-button color="primary" [disabled]="!formLogin.valid">Log in</button>
+            <button mat-raised-button color="primary" [disabled]="!formLogin.valid" (click)="login()">Log in</button>
           </div>
         </mat-card-content>
       </mat-card>

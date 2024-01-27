@@ -8,10 +8,14 @@ export class User {
   surname: string = '';
   role: string = '';
   birthNumber: string = '';
+  address: Address = new Address();
+  username: string = '';
+  password: string = '';
+}
+
+export class Address {
   street: string = '';
   zipcode: string = '';
   city: string = '';
   streetNumber: string = '';
-  userName: string = '';
-  password: string = '';
 }

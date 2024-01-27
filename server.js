@@ -26,6 +26,13 @@ const routesUser = require("./src/app/shared/routes/user.routes");
 app.use('/api/library', routesBook);
 app.use('/api/library', routesUser);
 
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  next();
+})
+
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
@@ -34,10 +41,7 @@ app.listen(PORT, () => {
 
 const db = require("./src/app/shared/model");
 db.mongoose
-  .connect(db.url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
+  .connect(db.url)
   .then(() => {
     console.log("Connected to the database!");
   })

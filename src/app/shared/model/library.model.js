@@ -12,7 +12,7 @@ const userSchema = mongoose.Schema(
       city: String,
       streetNumber: String
     },
-    userName: {type: String, required: true},
+    username: {type: String, required: true},
     password: {type: String, required: true},
     activated: Boolean
   });
