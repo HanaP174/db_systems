@@ -15,6 +15,10 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
+app.get('/alive', (req, res) => {
+  res.send(new Date().toISOString());
+});
+
 // set routes
 const ROUTES = require("./src/app/shared/routes/book.routes");
 app.use('/api/library', ROUTES);

@@ -1,13 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const tutorials = require("../controllers/book.controller.js");
+const bookController = require("../controllers/book.controller.js");
 
-router.get("/alive", tutorials.alive);
+// Add a new Book
+router.post("book/add", bookController.create);
 
-// Create a new Tutorial
-router.post("/addBook", tutorials.create);
-
-// Retrieve all Tutorials
-router.get("/getAllBooks", tutorials.findAll);
+// Retrieve all books
+router.get("book/list", bookController.findAll);
 
 module.exports = router;

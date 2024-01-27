@@ -1,9 +1,5 @@
 const { Book } = require("../model/library.model");
 
-exports.alive = (req, res) => {
-  res.send(new Date().toLocaleDateString());
-}
-
 exports.create = async (req, res) => {
     // Validate request
     if (req.body == null || req.body == undefined) {
