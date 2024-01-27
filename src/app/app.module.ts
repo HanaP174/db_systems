@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
-import {AdminModule} from "./admin/admin.module";
 import {AppRoutingModule} from "./app-routing.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatIconModule} from "@angular/material/icon";
@@ -15,10 +13,12 @@ import {MatButtonModule} from "@angular/material/button";
 import { SignUpComponent } from './view/sign-up/sign-up.component';
 import { HomePageComponent } from './view/home-page/home-page.component';
 import { HeaderComponent } from './view/header/header.component';
+import {UserComponent} from "./user/user.component";
+import {AdminComponent} from "./admin/admin.component";
 
 @NgModule({
-  declarations: [AppComponent, SignUpComponent, HomePageComponent, HeaderComponent],
-  imports: [BrowserModule, AdminModule, AppRoutingModule, MatIconModule, BrowserAnimationsModule,
+  declarations: [AppComponent, SignUpComponent, HomePageComponent, HeaderComponent, UserComponent, AdminComponent],
+  imports: [BrowserModule, AppRoutingModule, MatIconModule, BrowserAnimationsModule,
     HttpClientModule, MatCardModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButtonModule],
   providers: [],
   exports: [
