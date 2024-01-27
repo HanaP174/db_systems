@@ -4,12 +4,14 @@ import {SignUpComponent} from "./view/sign-up/sign-up.component";
 import {HomePageComponent} from "./view/home-page/home-page.component";
 import {UserComponent} from "./user/user.component";
 import {AdminComponent} from "./admin/admin.component";
+import {HistoryComponent} from "./user/history/history.component";
 
 const routes: Routes = [
   {path: '', component:HomePageComponent},
   {path: 'sign-up', component:SignUpComponent},
   {path: 'home', component:UserComponent},
-  {path: 'admin', component:AdminComponent}
+  {path: 'admin', component:AdminComponent},
+  {path: 'history', component:HistoryComponent}
 ];
 
 @NgModule({

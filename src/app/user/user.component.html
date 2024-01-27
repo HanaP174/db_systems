@@ -7,6 +7,10 @@
       <mat-icon>logout</mat-icon>
       <span>logout</span>
     </button>
+    <button mat-menu-item (click)="history()">
+      <mat-icon>history</mat-icon>
+      <span>history</span>
+    </button>
   </mat-menu>
 </app-header>
 <div class="not-activated" *ngIf="!user.activated; else activated">

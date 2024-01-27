@@ -19,9 +19,10 @@ import {MatMenuModule} from "@angular/material/menu";
 import { BooksViewComponent } from './user/books-view/books-view.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatTableModule} from "@angular/material/table";
+import { HistoryComponent } from './user/history/history.component';
 
 @NgModule({
-  declarations: [AppComponent, SignUpComponent, HomePageComponent, HeaderComponent, UserComponent, AdminComponent, BooksViewComponent],
+  declarations: [AppComponent, SignUpComponent, HomePageComponent, HeaderComponent, UserComponent, AdminComponent, BooksViewComponent, HistoryComponent],
   imports: [BrowserModule, AppRoutingModule, MatIconModule, BrowserAnimationsModule,
     HttpClientModule, MatCardModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButtonModule, MatMenuModule, MatProgressBarModule, MatTableModule],
   providers: [],
