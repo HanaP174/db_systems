@@ -16,11 +16,14 @@ import { HeaderComponent } from './view/header/header.component';
 import {UserComponent} from "./user/user.component";
 import {AdminComponent} from "./admin/admin.component";
 import {MatMenuModule} from "@angular/material/menu";
+import { BooksViewComponent } from './user/books-view/books-view.component';
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatTableModule} from "@angular/material/table";
 
 @NgModule({
-  declarations: [AppComponent, SignUpComponent, HomePageComponent, HeaderComponent, UserComponent, AdminComponent],
+  declarations: [AppComponent, SignUpComponent, HomePageComponent, HeaderComponent, UserComponent, AdminComponent, BooksViewComponent],
   imports: [BrowserModule, AppRoutingModule, MatIconModule, BrowserAnimationsModule,
-    HttpClientModule, MatCardModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButtonModule, MatMenuModule],
+    HttpClientModule, MatCardModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButtonModule, MatMenuModule, MatProgressBarModule, MatTableModule],
   providers: [],
   exports: [
     HeaderComponent

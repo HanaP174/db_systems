@@ -53,6 +53,7 @@ export class AuthService {
         const expiresDate = new Date(now.getTime() + (response.expiresIn * 1000));
         localStorage.setItem('token', this._token);
         localStorage.setItem('expiresIn', expiresDate.toISOString());
+        localStorage.setItem('user', JSON.stringify(this._user));
       }
     })
   }
@@ -65,6 +66,39 @@ export class AuthService {
     clearTimeout(this.logoutTimer);
     localStorage.removeItem('token');
     localStorage.removeItem('expiresIn');
+    localStorage.removeItem('user');
+  }
+
+  getLocalStorageData(){
+    const token = localStorage.getItem('token');
+    const expiresIn = localStorage.getItem('expiresIn');
+    const user = localStorage.getItem('user');
+
+    if(!token || !expiresIn || !user){
+      return;
+    }
+
+    return {
+      'token': token,
+      'expiresIn': new Date(expiresIn),
+      'user': JSON.parse(user)
+    }
+  }
+
+  authenticateFromLocalStorage(){
+    const localStorageData = this.getLocalStorageData();
+    if(localStorageData){
+      const now = new Date();
+      const expiresIn = localStorageData.expiresIn.getTime() - now.getTime();
+
+      if(expiresIn > 0){
+        this._token = localStorageData.token;
+        this._isAuthenticated = true;
+        this._user = localStorageData.user;
+        this.authenticatedSub.next(true);
+        this.logoutTimer.setTimeout(expiresIn / 1000);
+      }
+    }
   }
 
   private navigate() {
