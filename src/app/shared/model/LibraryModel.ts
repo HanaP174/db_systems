@@ -11,6 +11,7 @@ export class User {
   address: Address = new Address();
   username: string = '';
   password: string = '';
+  activated: boolean = false;
 }
 
 export class Address {

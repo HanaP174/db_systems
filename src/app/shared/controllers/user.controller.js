@@ -19,7 +19,8 @@ exports.signUp = async function (req, res) {
       zipcode: req.body.zipcode,
       city: req.body.city,
     },
-    role: "USER"
+    role: "USER",
+    activated: false
   });
 
   await user

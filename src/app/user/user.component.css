@@ -1,0 +1,10 @@
+.not-activated {
+  height: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  line-height: 2rem;
+  font-size: 2rem;
+}

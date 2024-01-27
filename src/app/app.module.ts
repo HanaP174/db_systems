@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import {AdminModule} from "./admin/admin.module";
-import {UserModule} from "./user/user.module";
 import {AppRoutingModule} from "./app-routing.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatIconModule} from "@angular/material/icon";
@@ -19,9 +18,12 @@ import { HeaderComponent } from './view/header/header.component';
 
 @NgModule({
   declarations: [AppComponent, SignUpComponent, HomePageComponent, HeaderComponent],
-  imports: [BrowserModule, AdminModule, UserModule, AppRoutingModule, MatIconModule, BrowserAnimationsModule,
+  imports: [BrowserModule, AdminModule, AppRoutingModule, MatIconModule, BrowserAnimationsModule,
     HttpClientModule, MatCardModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButtonModule],
   providers: [],
+  exports: [
+    HeaderComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
