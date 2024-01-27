@@ -34,7 +34,7 @@ exports.create = async (req, res) => {
 
 // Retrieve all Books from the database.
 exports.findAll = async (req, res) => {
-  const allBooksDb = await Book.find().exec()
+  const allBooksDb = await Book.find().exec();
   const allBooks = allBooksDb.map(b => b.toJSON());
 
   res.json(allBooks);

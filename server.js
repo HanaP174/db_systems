@@ -20,8 +20,11 @@ app.get('/alive', (req, res) => {
 });
 
 // set routes
-const ROUTES = require("./src/app/shared/routes/book.routes");
-app.use('/api/library', ROUTES);
+const routesBook = require("./src/app/shared/routes/book.routes");
+const routesUser = require("./src/app/shared/routes/user.routes");
+
+app.use('/api/library', routesBook);
+app.use('/api/library', routesUser);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

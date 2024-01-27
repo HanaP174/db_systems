@@ -35,7 +35,7 @@ exports.signUp = async function (req, res) {
     });
 };
 
-exports.getAllUsers = async (res) => {
+exports.getAllUsers = async (req, res) => {
   const allUsersDb = await User.find().exec();
   const allUsers = allUsersDb.map(user => user.toJSON());
 
