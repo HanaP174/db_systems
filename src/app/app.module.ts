@@ -15,11 +15,12 @@ import { HomePageComponent } from './view/home-page/home-page.component';
 import { HeaderComponent } from './view/header/header.component';
 import {UserComponent} from "./user/user.component";
 import {AdminComponent} from "./admin/admin.component";
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [AppComponent, SignUpComponent, HomePageComponent, HeaderComponent, UserComponent, AdminComponent],
   imports: [BrowserModule, AppRoutingModule, MatIconModule, BrowserAnimationsModule,
-    HttpClientModule, MatCardModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButtonModule],
+    HttpClientModule, MatCardModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButtonModule, MatMenuModule],
   providers: [],
   exports: [
     HeaderComponent
