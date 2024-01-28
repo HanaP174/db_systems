@@ -7,6 +7,52 @@
       <mat-icon>logout</mat-icon>
       <span>logout</span>
     </button>
+    <button mat-menu-item (click)="openNotifications()">
+      <mat-icon matBadge="15" matBadgeColor="warn">notifications</mat-icon>
+      <span>notifications</span>
+    </button>
   </mat-menu>
 </app-header>
 
+<div class="options">
+  <mat-card class="admin-card" (click)="openNotifications()">
+    <mat-card-header>
+      <mat-icon mat-card-avatar matBadge="15" matBadgeColor="warn">notifications</mat-icon>
+      <mat-card-title>Notifications</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+<!--      todo lits notifications-->
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="admin-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>local_library</mat-icon>
+      <mat-card-title>Library</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Edit, delete or add books in the our Book Universe and make someone happy!
+      </p>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="admin-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>manage_accounts</mat-icon>
+      <mat-card-title>Manage users</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="person-row">
+        <mat-icon>person</mat-icon>
+        <div class="person-info">{{users.length}} signed up users</div>
+      </div>
+      <div class="person-row">
+        <mat-icon>person_check</mat-icon>
+        <div class="person-info">{{approvedUsers}} approved users</div>
+      </div>
+      <div class="person-row">
+        <mat-icon>person_cancel</mat-icon>
+        <div class="person-info">{{pendingUsers}} pending user approval requests</div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

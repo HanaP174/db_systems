@@ -4,3 +4,26 @@
   padding-right: 3rem;
   padding-top: 1.5rem;
 }
+
+.options {
+  padding-top: 3rem;
+  width: 80%;
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 3rem;
+}
+
+.admin-card {
+  width: 30%;
+  cursor: pointer;
+}
+
+.person-row {
+  display: flex;
+  align-items: flex-end;
+}
+
+.person-info {
+  padding-left: 1rem;
+}
