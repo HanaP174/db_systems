@@ -1,6 +1,6 @@
 const { Book, BorrowedBook } = require("../model/library.model");
 
-exports.create = async (req, res) => {
+exports.add = async (req, res) => {
   // Validate request
   if (req.body == null || req.body == undefined) {
     res.status(400).send({ message: "Content can not be empty!" });
@@ -32,27 +32,76 @@ exports.create = async (req, res) => {
     });
 };
 
-exports.update = async (req, res) => {
-    // Validate request
-    if (req.body == null || req.body == undefined) {
-      res.status(400).send({ message: "Content can not be empty!" });
-      return;
-    }
+exports.get = async (req, res) => {
+  if (req.params == null || req.params.id == null) {
+    res.status(400).send({ message: "Book id missing!" });
+    return;
+  }
 
-    // TODO
-    const udpateBook = await Book.updateOne(req.body.id);
+  const book = await Book.find({ _id: req.params.id });
+  res.json(book);
 };
 
-// Retrieve all Books from the database.
-exports.findAll = async (req, res) => {
-  const allBooksDb = await Book.find().exec();
-  const allBooks = allBooksDb.map(b => b.toJSON());
+exports.update = async (req, res) => {
+  if (req.params == null || req.params.id == null || req.body == null) {
+    res.status(400).send({ message: "Request content or book id missing!" });
+    return;
+  }
 
+  const filter = { _id: req.body.id };
+  const udpate = {
+    $set: {
+      title: req.body.title,
+      author: req.body.author,
+      numberOfPages: req.body.numberOfPages,
+      year: req.body.year,
+      cover: req.body.cover,
+      availableCopies: req.body.availableCopies,
+      totalCopies: req.body.totalCopies
+    }
+  };
+
+  try {
+    const updated = await Book.updateOne(filter, udpate);
+    if (updated.acknowledged === true) {
+      res.json(updated.matchedCount);
+    } else {
+      res.status(400).send({ message: "Update operation was not acknowledged by the server" });
+    }
+  } catch (error) {
+    res.status(400).send({ message: "Error whend updating: " + error });
+  }
+};
+
+exports.delete = async (req, res) => {
+  if (req.params == null || req.params.id == null) {
+    res.status(400).send({ message: "Book id missing!" });
+    return;
+  }
+
+  try {
+    const deleted = await Book.deleteOne({ _id: req.params.id });
+    if (deleted.acknowledged === true) {
+      res.json(deleted.deletedCount);
+    } else {
+      res.status(400).send({ message: "Delete operation was not acknowledged by the server" });
+    }
+  } catch (error) {
+    res.status(400).send({ message: "Error whend deleting: " + error });
+  }
+};
+
+exports.findAll = async (req, res) => {
+  const allBooks = await Book.find({});
   res.json(allBooks);
 };
 
 exports.userBorrowed = async (req, res) => {
-  const userBorrowedBooks = await BorrowedBook.find({ userId: req.params.userId}).exec();
+  if (req.params == null || req.params.userId == null) {
+    res.status(400).send({ message: "User id missing!" });
+    return;
+  }
 
+  const userBorrowedBooks = await BorrowedBook.find({ userId: req.params.userId });
   res.json(userBorrowedBooks);
-}
+};
