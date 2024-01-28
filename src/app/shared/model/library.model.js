@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
-const userSchema = mongoose.Schema(
+// Schema section
+const schemaUser = mongoose.Schema(
   {
     name: String,
     surname: String,
@@ -12,15 +13,12 @@ const userSchema = mongoose.Schema(
       city: String,
       streetNumber: String
     },
-    username: {type: String, required: true},
-    password: {type: String, required: true},
+    username: { type: String, required: true },
+    password: { type: String, required: true },
     activated: Boolean
   });
 
-// Define the users model
-const User = mongoose.model("users", userSchema);
-
-var schemaBooks = mongoose.Schema(
+const schemaBook = mongoose.Schema(
   {
     title: String,
     author: String,
@@ -32,41 +30,37 @@ var schemaBooks = mongoose.Schema(
   }
 );
 
-schemaBooks.method("toJSON", function() {
-  const { __v, _id, ...object } = this.toObject();
-  object.id = _id;
-  return object;
-});
-
-const Book = mongoose.model("books", schemaBooks);
-
-// Define the borrowedBooks model
-const BorrowedBook = mongoose.model(
-  "borrowedBooks",
-  mongoose.Schema(
-    {
-      bookId: String,
-      userId: String,
-      borrowDate: Date,
-      returnDate: Date,
-      isReturned: Boolean,
-    },
-  )
+const schemaBorrowedBook = mongoose.Schema(
+  {
+    bookId: String,
+    userId: String,
+    borrowDate: Date,
+    returnDate: Date,
+    isReturned: Boolean,
+  }
 );
 
-// Define the notifications model
-const Notification = mongoose.model(
-  "notifications",
-  mongoose.Schema(
-    {
-      userId: String,
-      description: String,
-      published: Boolean,
-      type: String
-    },
-    { timestamps: true }
-  )
+const schemaNotification = mongoose.Schema(
+  {
+    userId: String,
+    description: String,
+    published: Boolean,
+    type: String
+  },
+  { timestamps: true }
 );
+
+// Json method extension section
+generateJsonMethod(schemaUser);
+generateJsonMethod(schemaBook);
+generateJsonMethod(schemaBorrowedBook);
+generateJsonMethod(schemaNotification);
+
+// Model section
+const User = mongoose.model("users", schemaUser);
+const Book = mongoose.model("books", schemaBook);
+const BorrowedBook = mongoose.model("borrowedBooks", schemaBorrowedBook);
+const Notification = mongoose.model("notifications", schemaNotification);
 
 // Export all models
 module.exports = {
@@ -75,3 +69,11 @@ module.exports = {
   BorrowedBook,
   Notification
 };
+
+function generateJsonMethod(schema) {
+  schema.method("toJSON", function () {
+    const { __v, _id, ...object } = this.toObject();
+    object.id = _id;
+    return object;
+  });
+}
