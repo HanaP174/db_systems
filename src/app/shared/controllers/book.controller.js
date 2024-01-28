@@ -1,36 +1,47 @@
-const { Book } = require("../model/library.model");
+const { Book, BorrowedBook } = require("../model/library.model");
 
 exports.create = async (req, res) => {
+  // Validate request
+  if (req.body == null || req.body == undefined) {
+    res.status(400).send({ message: "Content can not be empty!" });
+    return;
+  }
+
+  // Create a Book
+  const book = new Book({
+    title: req.body.title,
+    author: req.body.author,
+    numberOfPages: req.body.numberOfPages,
+    year: req.body.year,
+    cover: req.body.cover,
+    availableCopies: req.body.availableCopies,
+    totalCopies: req.body.totalCopies
+  });
+
+  // Save Book in the database
+  await book
+    .save()
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the Tutorial."
+      });
+    });
+};
+
+exports.update = async (req, res) => {
     // Validate request
     if (req.body == null || req.body == undefined) {
       res.status(400).send({ message: "Content can not be empty!" });
       return;
     }
 
-    // Create a Book
-    const book = new Book({
-      title: req.body.title,
-      author: req.body.author,
-      numberOfPages: req.body.numberOfPages,
-      year: req.body.year,
-      cover: req.body.cover,
-      availableCopies: req.body.availableCopies,
-      totalCopies: req.body.totalCopies
-    });
-
-    // Save Book in the database
-    await book
-      .save()
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while creating the Tutorial."
-        });
-      });
-  };
+    // TODO
+    const udpateBook = await Book.updateOne(req.body.id);
+};
 
 // Retrieve all Books from the database.
 exports.findAll = async (req, res) => {
@@ -39,3 +50,9 @@ exports.findAll = async (req, res) => {
 
   res.json(allBooks);
 };
+
+exports.userBorrowed = async (req, res) => {
+  const userBorrowedBooks = await BorrowedBook.find({ userId: req.params.userId}).exec();
+
+  res.json(userBorrowedBooks);
+}

@@ -1,37 +1,38 @@
-import { Component } from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
+import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from "@angular/material/table";
+import { Book, BorrowedBook } from 'src/app/shared/model/LibraryModel';
+import { AuthService } from 'src/app/shared/services/auth-service';
+import { BookService } from 'src/app/shared/services/book.service';
 
 @Component({
   selector: 'app-books-view',
   templateUrl: './books-view.component.html',
   styleUrls: ['./books-view.component.css']
 })
-export class BooksViewComponent {
+export class BooksViewComponent implements OnInit {
 
-//  todo get all books to display in the table
+  books: Book[] = [];
+  borrowedBooks: BorrowedBook[] = [];
+  displayedColumns: string[] = ['title', 'author', 'numberOfPages'];
+  dataSource = new MatTableDataSource<Book>;
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  constructor(private authService: AuthService,
+    private bookService: BookService) {
+  }
+
+  ngOnInit(): void {
+    this.initDataSource();
+  }
+
+  private initDataSource() {
+    this.bookService.getAllBooks().subscribe((books) => {
+      this.books = books;
+      this.dataSource.data = books;
+    });
+
+    const userId = this.authService.user.id;
+    this.bookService.getUserBorrowedBooks(userId).subscribe((borrowedBooks) => this.borrowedBooks = borrowedBooks);
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

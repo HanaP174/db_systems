@@ -4,6 +4,7 @@ export class UserAuth {
 }
 
 export class User {
+  id: string = '';
   name: string = '';
   surname: string = '';
   role: string = '';
@@ -19,4 +20,24 @@ export class Address {
   zipcode: string = '';
   city: string = '';
   streetNumber: string = '';
+}
+
+export class Book {
+  id: string = '';
+  title: string = '';
+  author: string = '';
+  numberOfPages: number = 0;
+  year: number = 0;
+  cover: string = '';
+  availableCopies: number = 0;
+  totalCopies: number = 0;
+}
+
+export class BorrowedBook {
+  id: string = '';
+  bookId: string = '';
+  userId: string = '';
+  borrowDate: Date = new Date(Number.MIN_SAFE_INTEGER);
+  returnDate: Date = new Date(Number.MIN_SAFE_INTEGER);
+  isReturned: boolean = false;
 }
