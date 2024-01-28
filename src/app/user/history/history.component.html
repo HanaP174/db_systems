@@ -1,1 +1,54 @@
-<p>history works!</p>
+<div class="title">Your Book Universe history</div>
+
+<div class="all-books">
+  <mat-form-field class="filter">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+  </mat-form-field>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Cover Column -->
+    <ng-container matColumnDef="cover">
+      <th mat-header-cell *matHeaderCellDef> Cover </th>
+      <td mat-cell *matCellDef="let element"><img src="{{'data:image/jpg;base64,' + element.cover}}" alt="Image"></td>
+    </ng-container>
+
+    <!-- Title Column -->
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> Title </th>
+      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+    </ng-container>
+
+    <!-- Author Column -->
+    <ng-container matColumnDef="author">
+      <th mat-header-cell *matHeaderCellDef> Author </th>
+      <td mat-cell *matCellDef="let element"> {{element.author}} </td>
+    </ng-container>
+
+    <!-- Number of pages Column -->
+    <ng-container matColumnDef="numberOfPages">
+      <th mat-header-cell *matHeaderCellDef> Number of pages </th>
+      <td mat-cell *matCellDef="let element"> {{element.numberOfPages}} </td>
+    </ng-container>
+
+    <!-- Year Column -->
+    <ng-container matColumnDef="year">
+      <th mat-header-cell *matHeaderCellDef> Year </th>
+      <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+    </ng-container>
+
+    <!-- Available copies Column -->
+    <ng-container matColumnDef="availableCopies">
+      <th mat-header-cell *matHeaderCellDef> Available copies </th>
+      <td mat-cell *matCellDef="let element"> {{element.availableCopies}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <!-- Row shown when there is no matching data. -->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+    </tr>
+  </table>
+</div>
