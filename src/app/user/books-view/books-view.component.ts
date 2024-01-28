@@ -13,9 +13,9 @@ export class BooksViewComponent implements OnInit {
 
   books: Book[] = [];
   borrowedBooks: BorrowedBook[] = [];
-  borrowedCount = 6;
+  borrowedCount = 0;
   borrowedTotalPercentage = 0;
-  displayedColumns: string[] = ['cover', 'title', 'author', 'numberOfPages', 'year', 'availableCopies'];
+  displayedColumns: string[] = ['cover', 'title', 'author', 'numberOfPages', 'year', 'availableCopies', 'borrow'];
   dataSource = new MatTableDataSource<Book>;
 
   constructor(private authService: AuthService,
@@ -38,7 +38,7 @@ export class BooksViewComponent implements OnInit {
 
       if (this.borrowedBooks.length !== 0) {
         this.borrowedTotalPercentage = this.borrowedBooks.length / 6 * 100;
-        this.borrowedCount = 6 - this.borrowedBooks.length;
+        this.borrowedCount = this.borrowedBooks.length;
       }
     });
   }
@@ -46,5 +46,24 @@ export class BooksViewComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  //todo
+  borrowBook(bookId: string) {
+    this.borrowedCount++;
+    this.borrowedTotalPercentage = this.borrowedCount / 6 * 100
+    console.log(bookId);
+  }
+
+  //todo
+  returnBook(bookId: string) {
+    this.borrowedCount--;
+    this.borrowedTotalPercentage = this.borrowedCount / 6 * 100
+    console.log(bookId);
+  }
+
+  isBorrowed(bookId: string) {
+    const borrowedBook = this.borrowedBooks.find(book => book.bookId === bookId);
+    return borrowedBook == null ? false : !borrowedBook.isReturned;
   }
 }

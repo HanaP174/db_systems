@@ -19,9 +19,9 @@ export class BookService {
   }
 
   public getAllBooks(): Observable<Book[]> {
-    const apirUrl = `${this.API_BASE}/book/list`;
+    const apiUrl = `${this.API_BASE}/book/list`;
 
-    return this.httpClient.get<Book[]>(apirUrl);
+    return this.httpClient.get<Book[]>(apiUrl);
   }
 
   public getBook(bookId: string): Observable<Book> {

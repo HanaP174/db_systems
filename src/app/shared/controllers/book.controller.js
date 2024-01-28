@@ -105,3 +105,8 @@ exports.userBorrowed = async (req, res) => {
   const userBorrowedBooks = await BorrowedBook.find({ userId: req.params.userId });
   res.json(userBorrowedBooks);
 };
+
+// todo borrowBook
+exports.borrowBook = async (req, res) => {
+
+}

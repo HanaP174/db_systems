@@ -11,12 +11,11 @@ export class AuthService {
   private _isAuthenticated = false;
   private _user = new User();
   private authenticatedSub = new Subject<boolean>();
-  private logoutTimer: any;
+  private logoutTimer: any; // todo init
 
   get isAuthenticated(): boolean {
     return this._isAuthenticated;
   }
-
 
   get token(): string {
     return this._token;

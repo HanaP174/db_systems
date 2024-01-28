@@ -4,6 +4,7 @@ import { Subscription, catchError, forkJoin, of } from 'rxjs';
 import { BorrowedBook } from 'src/app/shared/model/LibraryModel';
 import { AuthService } from 'src/app/shared/services/auth-service';
 import { BookService } from 'src/app/shared/services/book.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-history',
@@ -18,7 +19,8 @@ export class HistoryComponent implements OnInit, OnDestroy {
   dataSource = new MatTableDataSource<BorrowedBookModel>;
 
   constructor(private authService: AuthService,
-    private bookService: BookService) {
+    private bookService: BookService,
+    private router: Router) {
   }
 
   ngOnInit(): void {
@@ -46,6 +48,14 @@ export class HistoryComponent implements OnInit, OnDestroy {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+
+  home() {
+    this.router.navigate(['/home'])
   }
 }
 

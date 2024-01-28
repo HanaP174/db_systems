@@ -1,3 +1,18 @@
+<app-header>
+  <button class="menu-button" mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>logout</span>
+    </button>
+    <button mat-menu-item (click)="home()">
+      <mat-icon>home</mat-icon>
+      <span>home</span>
+    </button>
+  </mat-menu>
+</app-header>
 <div class="title">Your Book Universe history</div>
 
 <div class="all-books">
