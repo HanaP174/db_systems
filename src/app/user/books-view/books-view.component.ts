@@ -13,7 +13,9 @@ export class BooksViewComponent implements OnInit {
 
   books: Book[] = [];
   borrowedBooks: BorrowedBook[] = [];
-  displayedColumns: string[] = ['title', 'author', 'numberOfPages'];
+  borrowedCount = 6;
+  borrowedTotalPerc = 0;
+  displayedColumns: string[] = ['cover', 'title', 'author', 'numberOfPages', 'year', 'availableCopies'];
   dataSource = new MatTableDataSource<Book>;
 
   constructor(private authService: AuthService,
@@ -31,7 +33,14 @@ export class BooksViewComponent implements OnInit {
     });
 
     const userId = this.authService.user.id;
-    this.bookService.getUserBorrowedBooks(userId).subscribe((borrowedBooks) => this.borrowedBooks = borrowedBooks);
+    this.bookService.getUserBorrowedBooks(userId).subscribe((borrowedBooks) => {
+      this.borrowedBooks = borrowedBooks;
+
+      if (this.borrowedBooks.length !== 0) {
+        this.borrowedTotalPerc = this.borrowedBooks.length / 6 * 100;
+        this.borrowedCount = 6 - this.borrowedBooks.length;
+      }
+    });
   }
 
   applyFilter(event: Event) {

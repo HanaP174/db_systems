@@ -2,9 +2,9 @@
 
 <!--todo progress is how many books is currently borrowed max is 100 (100% = 6 books)-->
 <div class="books-progress">
-<!--  todo how many books will be based on databasa-->
-  <span>You can borrow 3 more books</span>
-  <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+  <!--  todo how many books will be based on databasa-->
+  <span>You can borrow {{borrowedCount}} more books</span>
+  <mat-progress-bar mode="determinate" [value]="borrowedTotalPerc"></mat-progress-bar>
 </div>
 
 <div class="all-books">
@@ -14,6 +14,12 @@
   </mat-form-field>
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Cover Column -->
+    <ng-container matColumnDef="cover">
+      <th mat-header-cell *matHeaderCellDef> Cover </th>
+      <td mat-cell *matCellDef="let element"><img src="{{'data:image/jpg;base64,' + element.cover}}" alt="Image"></td>
+    </ng-container>
+
     <!-- Title Column -->
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef> Title </th>
@@ -32,10 +38,16 @@
       <td mat-cell *matCellDef="let element"> {{element.numberOfPages}} </td>
     </ng-container>
 
-    <!-- Cover Column -->
-    <ng-container matColumnDef="cover">
-      <th mat-header-cell *matHeaderCellDef> Cover </th>
-      <td mat-cell *matCellDef="let element"> {{element.cover}} </td>
+    <!-- Year Column -->
+    <ng-container matColumnDef="year">
+      <th mat-header-cell *matHeaderCellDef> Year </th>
+      <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+    </ng-container>
+
+    <!-- Available copies Column -->
+    <ng-container matColumnDef="availableCopies">
+      <th mat-header-cell *matHeaderCellDef> Available copies </th>
+      <td mat-cell *matCellDef="let element"> {{element.availableCopies}} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
