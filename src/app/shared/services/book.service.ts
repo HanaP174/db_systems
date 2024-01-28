@@ -12,10 +12,34 @@ export class BookService {
 
   constructor(private httpClient: HttpClient) { }
 
+  public addBook(book: Book) {
+    const apirUrl = `${this.API_BASE}/book/add`;
+
+    this.httpClient.post(apirUrl, book);
+  }
+
   public getAllBooks(): Observable<Book[]> {
     const apirUrl = `${this.API_BASE}/book/list`;
 
     return this.httpClient.get<Book[]>(apirUrl);
+  }
+
+  public getBook(bookId: string): Observable<Book> {
+    const apirUrl = `${this.API_BASE}/book/${bookId}`;
+
+    return this.httpClient.get<Book>(apirUrl);
+  }
+
+  public updateBook(bookId: string, book: Book) {
+    const apirUrl = `${this.API_BASE}/book/${bookId}`;
+
+    this.httpClient.put(apirUrl, book);
+  }
+
+  public deleteBook(bookId: string) {
+    const apirUrl = `${this.API_BASE}/book/${bookId}`;
+
+    this.httpClient.delete(apirUrl);
   }
 
   public getUserBorrowedBooks(userId: string): Observable<BorrowedBook[]> {
