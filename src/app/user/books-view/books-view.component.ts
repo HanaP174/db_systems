@@ -14,7 +14,7 @@ export class BooksViewComponent implements OnInit {
   books: Book[] = [];
   borrowedBooks: BorrowedBook[] = [];
   borrowedCount = 6;
-  borrowedTotalPerc = 0;
+  borrowedTotalPercentage = 0;
   displayedColumns: string[] = ['cover', 'title', 'author', 'numberOfPages', 'year', 'availableCopies'];
   dataSource = new MatTableDataSource<Book>;
 
@@ -37,7 +37,7 @@ export class BooksViewComponent implements OnInit {
       this.borrowedBooks = borrowedBooks;
 
       if (this.borrowedBooks.length !== 0) {
-        this.borrowedTotalPerc = this.borrowedBooks.length / 6 * 100;
+        this.borrowedTotalPercentage = this.borrowedBooks.length / 6 * 100;
         this.borrowedCount = 6 - this.borrowedBooks.length;
       }
     });
