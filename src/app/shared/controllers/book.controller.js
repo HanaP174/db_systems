@@ -48,7 +48,7 @@ exports.update = async (req, res) => {
     return;
   }
 
-  const filter = { _id: req.body.id };
+  const filter = { _id: req.params.id };
   const udpate = {
     $set: {
       title: req.body.title,
@@ -106,7 +106,31 @@ exports.userBorrowed = async (req, res) => {
   res.json(userBorrowedBooks);
 };
 
-// todo borrowBook
-exports.borrowBook = async (req, res) => {
+exports.insertUpdateBorrowed = async (req, res) => {
+  if (req.params == null || req.params.id == null || req.body == null) {
+    res.status(400).send({ message: "Request content or book id missing!" });
+    return;
+  }
 
+  const filter = { bookId: req.params.id };
+  const udpate = {
+    $set: {
+      userId: req.body.userId,
+      borrowDate: req.body.borrowDate,
+      returnDate: req.body.returnDate,
+      isReturned: req.body.isReturned
+    }
+  };
+  const options = { upsert: true };
+
+  try {
+    const updated = await BorrowedBook.updateOne(filter, udpate, options);
+    if (updated.acknowledged === true) {
+      res.json(updated.matchedCount);
+    } else {
+      res.status(400).send({ message: "Update operation was not acknowledged by the server" });
+    }
+  } catch (error) {
+    res.status(400).send({ message: "Error whend updating: " + error });
+  }
 }

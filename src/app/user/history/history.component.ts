@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription, catchError, forkJoin, of } from 'rxjs';
-import { BorrowedBook } from 'src/app/shared/model/LibraryModel';
+import { Book, BorrowedBook } from 'src/app/shared/model/LibraryModel';
 import { AuthService } from 'src/app/shared/services/auth-service';
 import { BookService } from 'src/app/shared/services/book.service';
 import {Router} from "@angular/router";
@@ -34,14 +34,25 @@ export class HistoryComponent implements OnInit, OnDestroy {
   private initDataSource() {
     const userId = this.authService.user.id;
 
-    const data$ = forkJoin({
-      books: this.bookService.getAllBooks(),
-      borrowedBooks: this.bookService.getUserBorrowedBooks(userId)
-    }).pipe(catchError((error) => of(error)));
+    const data$ = forkJoin([
+      this.bookService.getAllBooks(),
+      this.bookService.getUserBorrowedBooks(userId)
+    ]).pipe(catchError((error) => of(error)));
 
-    this.dataSubscription = data$.subscribe(({books, borrowedBooks}) => {
+    this.dataSubscription = data$.subscribe(([books, borrowedBooks]: [Book[], BorrowedBook[]]) => {
+      borrowedBooks.forEach((borrowedBook) => {
+        const book = books.find(b => b.id === borrowedBook.bookId);
 
-      this.dataSource.data.push();
+        if (book !== undefined) {
+          this.dataSource.data.push({
+            cover: book.cover,
+            title: book.title,
+            author: book.author,
+            borrowDate: borrowedBook.borrowDate,
+            returnDate: borrowedBook.returnDate
+          });
+        }
+      });
     });
   }
 
@@ -64,5 +75,5 @@ export interface BorrowedBookModel {
   title: string;
   author: string;
   borrowDate: Date;
-  ReturnDate?: Date;
+  returnDate?: Date;
 }

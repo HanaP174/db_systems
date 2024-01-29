@@ -42,6 +42,12 @@ export class BookService {
     this.httpClient.delete(apirUrl);
   }
 
+  public insertUpdateBorrowedBook(bookId: string, borrowedBook: BorrowedBook) {
+    const apirUrl = `${this.API_BASE}/book/userBorrowed/${bookId}`;
+
+    this.httpClient.post(apirUrl, borrowedBook);
+  }
+
   public getUserBorrowedBooks(userId: string): Observable<BorrowedBook[]> {
     const apirUrl = `${this.API_BASE}/book/userBorrowed/${userId}`;
 

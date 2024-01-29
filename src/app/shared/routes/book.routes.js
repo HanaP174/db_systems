@@ -17,6 +17,9 @@ router.put("/book/:id", bookController.update);
 // Delete a book
 router.delete("/book/:id", bookController.delete);
 
+// Insert or update record of borrowed by user
+router.post("/book/userBorrowed/:id", bookController.insertUpdateBorrowed);
+
 // Retrieve all books borrowed by user
 router.get("/book/userBorrowed/:userId", bookController.userBorrowed);
 
