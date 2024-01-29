@@ -34,10 +34,10 @@ export class Book {
 }
 
 export class BorrowedBook {
-  id: string = '';
+  id?: string;
   bookId: string = '';
   userId: string = '';
   borrowDate: Date = new Date(Number.MIN_SAFE_INTEGER);
-  returnDate: Date = new Date(Number.MIN_SAFE_INTEGER);
+  returnDate?: Date;
   isReturned: boolean = false;
 }

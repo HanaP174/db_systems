@@ -48,18 +48,63 @@ export class BooksViewComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  //todo
+
   borrowBook(bookId: string) {
-    this.borrowedCount++;
-    this.borrowedTotalPercentage = this.borrowedCount / 6 * 100
-    console.log(bookId);
+    if (this.borrowedCount === 6) {
+      return;
+    }
+
+    let borrowedBook = this.borrowedBooks.find(b => b.bookId === bookId);
+    if (borrowedBook === undefined) {
+      borrowedBook = {} as BorrowedBook;
+      borrowedBook.bookId = bookId;
+      borrowedBook.userId = this.authService.user.id;
+    }
+
+    borrowedBook.borrowDate = new Date();
+    borrowedBook.isReturned = false;
+
+    this.bookService.insertUpdateBorrowedBook(bookId, borrowedBook).subscribe(d => {
+      if (!isNaN(d)) {
+        this.borrowedCount++;
+        this.borrowedTotalPercentage = this.borrowedCount / 6 * 100;
+
+        let book = this.books.find(b => b.id = bookId);
+        if (book !== undefined) {
+          book.availableCopies = book.availableCopies - 1;
+        }
+      } else {
+        console.log(d.message);
+      }
+    });
   }
 
-  //todo
   returnBook(bookId: string) {
-    this.borrowedCount--;
-    this.borrowedTotalPercentage = this.borrowedCount / 6 * 100
-    console.log(bookId);
+    if (this.borrowedCount === 0) {
+      return;
+    }
+
+    let borrowedBook = this.borrowedBooks.find(b => b.bookId === bookId);
+    if (borrowedBook === undefined) {
+      return;
+    }
+
+    borrowedBook.returnDate = new Date();
+    borrowedBook.isReturned = true;
+
+    this.bookService.insertUpdateBorrowedBook(bookId, borrowedBook).subscribe(d => {
+      if (!isNaN(d)) {
+        this.borrowedCount--;
+        this.borrowedTotalPercentage = this.borrowedCount / 6 * 100
+
+        let book = this.books.find(b => b.id = bookId);
+        if (book !== undefined) {
+          book.availableCopies = book.availableCopies + 1;
+        }
+      } else {
+        console.log(d.message);
+      }
+    });
   }
 
   isBorrowed(bookId: string) {
