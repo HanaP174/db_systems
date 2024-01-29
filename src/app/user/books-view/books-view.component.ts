@@ -17,6 +17,7 @@ export class BooksViewComponent implements OnInit {
   borrowedTotalPercentage = 0;
   displayedColumns: string[] = ['cover', 'title', 'author', 'numberOfPages', 'year', 'availableCopies', 'borrow'];
   dataSource = new MatTableDataSource<Book>;
+  buttonText = 'Borrow';
 
   constructor(private authService: AuthService,
     private bookService: BookService) {
@@ -48,28 +49,45 @@ export class BooksViewComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  getButtonColor(book: Book) {
+    if (this.isBorrowed(book)) {
+      this.buttonText = 'Return';
+      return 'warn';
+    } else {
+      this.buttonText = 'Borrow';
+      return 'primary';
+    }
+  }
 
-  borrowBook(bookId: string) {
+  borrowOrReturnBook(book: Book) {
+    if (this.isBorrowed(book)) {
+      this.returnBook(book);
+    } else {
+      this.borrowBook(book);
+    }
+  }
+
+  borrowBook(bookToBorrow: Book) {
     if (this.borrowedCount === 6) {
       return;
     }
 
-    let borrowedBook = this.borrowedBooks.find(b => b.bookId === bookId);
+    let borrowedBook = this.borrowedBooks.find(b => b.bookId === bookToBorrow.id);
     if (borrowedBook === undefined) {
       borrowedBook = {} as BorrowedBook;
-      borrowedBook.bookId = bookId;
+      borrowedBook.bookId = bookToBorrow.id;
       borrowedBook.userId = this.authService.user.id;
     }
 
     borrowedBook.borrowDate = new Date();
     borrowedBook.isReturned = false;
 
-    this.bookService.insertUpdateBorrowedBook(bookId, borrowedBook).subscribe(d => {
+    this.bookService.insertUpdateBorrowedBook(bookToBorrow.id, borrowedBook).subscribe(d => {
       if (!isNaN(d)) {
         this.borrowedCount++;
         this.borrowedTotalPercentage = this.borrowedCount / 6 * 100;
 
-        let book = this.books.find(b => b.id = bookId);
+        let book = this.books.find(b => b.id = bookToBorrow.id);
         if (book !== undefined) {
           book.availableCopies = book.availableCopies - 1;
         }
@@ -79,12 +97,12 @@ export class BooksViewComponent implements OnInit {
     });
   }
 
-  returnBook(bookId: string) {
+  returnBook(bookToReturn: Book) {
     if (this.borrowedCount === 0) {
       return;
     }
 
-    let borrowedBook = this.borrowedBooks.find(b => b.bookId === bookId);
+    let borrowedBook = this.borrowedBooks.find(b => b.bookId === bookToReturn.id);
     if (borrowedBook === undefined) {
       return;
     }
@@ -92,12 +110,12 @@ export class BooksViewComponent implements OnInit {
     borrowedBook.returnDate = new Date();
     borrowedBook.isReturned = true;
 
-    this.bookService.insertUpdateBorrowedBook(bookId, borrowedBook).subscribe(d => {
+    this.bookService.insertUpdateBorrowedBook(bookToReturn.id, borrowedBook).subscribe(d => {
       if (!isNaN(d)) {
         this.borrowedCount--;
         this.borrowedTotalPercentage = this.borrowedCount / 6 * 100
 
-        let book = this.books.find(b => b.id = bookId);
+        let book = this.books.find(b => b.id = bookToReturn.id);
         if (book !== undefined) {
           book.availableCopies = book.availableCopies + 1;
         }
@@ -107,8 +125,8 @@ export class BooksViewComponent implements OnInit {
     });
   }
 
-  isBorrowed(bookId: string) {
-    const borrowedBook = this.borrowedBooks.find(book => book.bookId === bookId);
+  isBorrowed(bookToCheck: Book) {
+    const borrowedBook = this.borrowedBooks.find(book => book.bookId === bookToCheck.id);
     return borrowedBook == null ? false : !borrowedBook.isReturned;
   }
 }

@@ -52,10 +52,7 @@
     <ng-container matColumnDef="borrow">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
-        <button mat-raised-button color="warn" *ngIf="isBorrowed(element.id); else borrow" (click)="returnBook(element.id)">Return</button>
-        <ng-template #borrow>
-          <button mat-raised-button color="primary" [disabled]="borrowedCount >= 6" (click)="borrowBook(element.id)">Borrow</button>
-        </ng-template>
+        <button mat-raised-button [color]="getButtonColor(element)" (click)="borrowOrReturnBook(element)">{{buttonText}}</button>
       </td>
     </ng-container>
 
