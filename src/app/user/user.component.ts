@@ -27,4 +27,8 @@ export class UserComponent implements OnInit {
   history() {
     this.router.navigate(['/history'])
   }
+
+  personPage() {
+    this.router.navigate(['/person-page'])
+  }
 }

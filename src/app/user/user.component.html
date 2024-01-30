@@ -11,6 +11,10 @@
       <mat-icon>history</mat-icon>
       <span>history</span>
     </button>
+    <button mat-menu-item (click)="personPage()">
+      <mat-icon>manage_accounts</mat-icon>
+      <span>personal data</span>
+    </button>
   </mat-menu>
 </app-header>
 <div class="not-activated" *ngIf="!user.activated; else activated">

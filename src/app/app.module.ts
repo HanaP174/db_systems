@@ -23,11 +23,16 @@ import { HistoryComponent } from './user/history/history.component';
 import {MatBadgeModule} from "@angular/material/badge";
 import { NotificationsComponent } from './admin/notifications/notifications.component';
 import { BooksEditorComponent } from './admin/books-editor/books-editor.component';
+import { UsersComponent } from './admin/users/users.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import { ConfirmDeleteUserComponent } from './admin/users/confirm-delete-user/confirm-delete-user.component';
+import { EditUserDialogComponent } from './admin/users/edit-user-dialog/edit-user-dialog.component';
+import { PersonalDataComponent } from './user/personal-data/personal-data.component';
 
 @NgModule({
-  declarations: [AppComponent, SignUpComponent, HomePageComponent, HeaderComponent, UserComponent, AdminComponent, BooksViewComponent, HistoryComponent, NotificationsComponent, BooksEditorComponent],
+  declarations: [AppComponent, SignUpComponent, HomePageComponent, HeaderComponent, UserComponent, AdminComponent, BooksViewComponent, HistoryComponent, NotificationsComponent, BooksEditorComponent, UsersComponent, ConfirmDeleteUserComponent, EditUserDialogComponent, PersonalDataComponent],
   imports: [BrowserModule, AppRoutingModule, MatIconModule, BrowserAnimationsModule,
-    HttpClientModule, MatCardModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButtonModule, MatMenuModule, MatProgressBarModule, MatTableModule, MatBadgeModule],
+    HttpClientModule, MatCardModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButtonModule, MatMenuModule, MatProgressBarModule, MatTableModule, MatBadgeModule, MatDialogModule],
   providers: [],
   exports: [
     HeaderComponent
