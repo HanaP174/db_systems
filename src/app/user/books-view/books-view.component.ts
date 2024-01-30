@@ -18,6 +18,7 @@ export class BooksViewComponent implements OnInit {
   displayedColumns: string[] = ['cover', 'title', 'author', 'numberOfPages', 'year', 'availableCopies', 'borrow'];
   dataSource = new MatTableDataSource<Book>;
   buttonText = 'Borrow';
+  disableBorrowing = false;
 
   constructor(private authService: AuthService,
     private bookService: BookService) {
@@ -35,7 +36,7 @@ export class BooksViewComponent implements OnInit {
 
     const userId = this.authService.user.id;
     this.bookService.getUserBorrowedBooks(userId).subscribe((borrowedBooks) => {
-      this.borrowedBooks = borrowedBooks;
+      this.borrowedBooks = borrowedBooks.filter(book => !book.isReturned);
 
       if (this.borrowedBooks.length !== 0) {
         this.borrowedTotalPercentage = this.borrowedBooks.length / 6 * 100;
@@ -52,9 +53,11 @@ export class BooksViewComponent implements OnInit {
   getButtonColor(book: Book) {
     if (this.isBorrowed(book)) {
       this.buttonText = 'Return';
+      this.disableBorrowing = false;
       return 'warn';
     } else {
       this.buttonText = 'Borrow';
+      this.disableBorrowing = this.borrowedCount >= 6 || book.availableCopies <= 0;
       return 'primary';
     }
   }
@@ -117,7 +120,7 @@ export class BooksViewComponent implements OnInit {
 
         let book = this.books.find(b => b.id = bookToReturn.id);
         if (book !== undefined) {
-          book.availableCopies = book.availableCopies + 1;
+          book.availableCopies++;
         }
       } else {
         console.log(d.message);

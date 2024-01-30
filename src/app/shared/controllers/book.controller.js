@@ -179,7 +179,7 @@ exports.insertUpdateBorrowed = async (req, res) => {
         res.status(400).send({ message: "Update operation for borrowed book was not acknowledged by the server" });
       }
     } catch (error) {
-      res.status(400).send({ message: "Error whend updating: " + error });
+      res.status(400).send({ message: "Error when updating: " + error });
     }
   }
 }
