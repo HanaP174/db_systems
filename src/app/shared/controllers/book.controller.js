@@ -117,14 +117,14 @@ exports.insertUpdateBorrowed = async (req, res) => {
   let bookUpdatedMatch = 0;
 
   if (req.body.isReturned === false) {
-    if (book.availableCopies !== undefined && book.availableCopies < book.totalCopies) {
+    if (book.availableCopies !== undefined && 0 < book.availableCopies) {
       const bookUpdated = await Book.updateOne({ _id: req.body.bookId }, { $set: { availableCopies: (book.availableCopies - 1) } });
       bookUpdatedMatch = bookUpdated.matchedCount;
     } else {
       res.status(400).send({ message: "All books already returned" });
     }
   } else {
-    if (book.availableCopies !== undefined && 0 < book.availableCopies) {
+    if (book.availableCopies !== undefined && book.availableCopies < book.totalCopies) {
       const bookUpdated = await Book.updateOne({ _id: req.body.bookId }, { $set: { availableCopies: (book.availableCopies + 1) } });
       bookUpdatedMatch = bookUpdated.matchedCount;
     } else {
