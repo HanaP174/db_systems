@@ -14,8 +14,10 @@ import {Router} from "@angular/router";
 export class HistoryComponent implements OnInit, OnDestroy {
 
   private dataSubscription: Subscription = new Subscription;
-  borrowedBooks: BorrowedBook[] = [];
-  displayedColumns: string[] = ['cover', 'title', 'author', 'numberOfPages', 'year', 'availableCopies'];
+  private userBorrowedBooks: BorrowedBook[] = [];
+
+  borrowedBooks: BorrowedBookModel[] = [];
+  displayedColumns: string[] = ['cover', 'title', 'author', 'borrowDate', 'returnDate', 'return'];
   dataSource = new MatTableDataSource<BorrowedBookModel>;
 
   constructor(private authService: AuthService,
@@ -40,19 +42,23 @@ export class HistoryComponent implements OnInit, OnDestroy {
     ]).pipe(catchError((error) => of(error)));
 
     this.dataSubscription = data$.subscribe(([books, borrowedBooks]: [Book[], BorrowedBook[]]) => {
+      this.userBorrowedBooks = borrowedBooks;
       borrowedBooks.forEach((borrowedBook) => {
         const book = books.find(b => b.id === borrowedBook.bookId);
 
         if (book !== undefined) {
-          this.dataSource.data.push({
+          this.borrowedBooks.push({
+            bookId: book.id,
             cover: book.cover,
             title: book.title,
             author: book.author,
             borrowDate: borrowedBook.borrowDate,
-            returnDate: borrowedBook.returnDate
+            returnDate: borrowedBook.returnDate,
+            isReturned: borrowedBook.isReturned
           });
         }
       });
+      this.dataSource.data = this.borrowedBooks;
     });
   }
 
@@ -68,12 +74,30 @@ export class HistoryComponent implements OnInit, OnDestroy {
   home() {
     this.router.navigate(['/home'])
   }
+
+  returnBook(bookToReturn: BorrowedBookModel) {
+    let borrowedBook = this.userBorrowedBooks.find(b => b.bookId === bookToReturn.bookId);
+    if (borrowedBook === undefined) {
+      return;
+    }
+
+    borrowedBook.returnDate = new Date();
+    borrowedBook.isReturned = true;
+
+    this.bookService.insertUpdateBorrowedBook(bookToReturn.bookId, borrowedBook).subscribe(d => {
+      if (isNaN(d)) {
+        console.log(d.message);
+      }
+    });
+  }
 }
 
 export interface BorrowedBookModel {
+  bookId: string;
   cover: string;
   title: string;
   author: string;
   borrowDate: Date;
   returnDate?: Date;
+  isReturned: boolean;
 }
