@@ -33,6 +33,10 @@ export class AdminComponent implements OnInit {
     this.router.navigate(['/notifications']);
   }
 
+  openUsers() {
+    this.router.navigate(['/users']);
+  }
+
   private init() {
     this.userService.getAllUsers().subscribe(response => {
       if (response) {
