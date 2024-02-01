@@ -41,3 +41,13 @@ export class BorrowedBook {
   returnDate?: Date;
   isReturned: boolean = false;
 }
+
+export interface BorrowedBookModel {
+  bookId: string;
+  cover: string;
+  title: string;
+  author: string;
+  borrowDate: Date;
+  returnDate?: Date;
+  isReturned: boolean;
+}

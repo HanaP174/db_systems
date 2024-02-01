@@ -36,7 +36,6 @@ export class EditUserDialogComponent {
   }
 
   ngOnInit() {
-    console.log(this.user);
     const userModel = this.getUserModel();
     this.personalDataForm = this.formBuilder.group({
       name: new FormControl(userModel.name, [Validators.required]),

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription, catchError, forkJoin, of } from 'rxjs';
-import { Book, BorrowedBook } from 'src/app/shared/model/LibraryModel';
+import {Book, BorrowedBook, BorrowedBookModel} from 'src/app/shared/model/LibraryModel';
 import { AuthService } from 'src/app/shared/services/auth-service';
 import { BookService } from 'src/app/shared/services/book.service';
 import {Router} from "@angular/router";
@@ -35,6 +35,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
 
   private initDataSource() {
     const userId = this.authService.user.id;
+    this.userBorrowedBooks = [];
 
     const data$ = forkJoin([
       this.bookService.getAllBooks(),
@@ -90,14 +91,4 @@ export class HistoryComponent implements OnInit, OnDestroy {
       }
     });
   }
-}
-
-export interface BorrowedBookModel {
-  bookId: string;
-  cover: string;
-  title: string;
-  author: string;
-  borrowDate: Date;
-  returnDate?: Date;
-  isReturned: boolean;
 }

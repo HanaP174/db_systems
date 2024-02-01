@@ -28,9 +28,10 @@ import {MatDialogModule} from "@angular/material/dialog";
 import { ConfirmDeleteUserComponent } from './admin/users/confirm-delete-user/confirm-delete-user.component';
 import { EditUserDialogComponent } from './admin/users/edit-user-dialog/edit-user-dialog.component';
 import { PersonalDataComponent } from './user/personal-data/personal-data.component';
+import { UserBorrowingHistoryDialogComponent } from './admin/users/user-borrowing-history-dialog/user-borrowing-history-dialog.component';
 
 @NgModule({
-  declarations: [AppComponent, SignUpComponent, HomePageComponent, HeaderComponent, UserComponent, AdminComponent, BooksViewComponent, HistoryComponent, NotificationsComponent, BooksEditorComponent, UsersComponent, ConfirmDeleteUserComponent, EditUserDialogComponent, PersonalDataComponent],
+  declarations: [AppComponent, SignUpComponent, HomePageComponent, HeaderComponent, UserComponent, AdminComponent, BooksViewComponent, HistoryComponent, NotificationsComponent, BooksEditorComponent, UsersComponent, ConfirmDeleteUserComponent, EditUserDialogComponent, PersonalDataComponent, UserBorrowingHistoryDialogComponent],
   imports: [BrowserModule, AppRoutingModule, MatIconModule, BrowserAnimationsModule,
     HttpClientModule, MatCardModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButtonModule, MatMenuModule, MatProgressBarModule, MatTableModule, MatBadgeModule, MatDialogModule],
   providers: [],
