@@ -37,6 +37,10 @@ export class AdminComponent implements OnInit {
     this.router.navigate(['/users']);
   }
 
+  openLibrary() {
+    this.router.navigate(['/library']);
+  }
+
   private init() {
     this.userService.getAllUsers().subscribe(response => {
       if (response) {
