@@ -4,7 +4,7 @@ import {Book, BorrowedBook, BorrowedBookModel, User} from "../../shared/model/Li
 import {UserService} from "../../shared/services/user.service";
 import {AuthService} from "../../shared/services/auth-service";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {ConfirmDeleteUserComponent} from "./confirm-delete-user/confirm-delete-user.component";
+import {ConfirmDeleteComponent} from "../../shared/components/confirm-delete-user/confirm-delete.component";
 import {EditUserDialogComponent} from "./edit-user-dialog/edit-user-dialog.component";
 import {catchError, forkJoin, of, Subscription} from "rxjs";
 import {BookService} from "../../shared/services/book.service";
@@ -79,9 +79,10 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   private deleteUser(user: User) {
     const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = 'Are you sure you want to delete user?';
 
     dialogConfig.disableClose = true;
-    const dialogOutput = this.dialog.open(ConfirmDeleteUserComponent, dialogConfig);
+    const dialogOutput = this.dialog.open(ConfirmDeleteComponent, dialogConfig);
 
     dialogOutput.afterClosed().subscribe(shouldDelete => {
       // todo delete user;

@@ -25,7 +25,7 @@ import { NotificationsComponent } from './admin/notifications/notifications.comp
 import { BooksEditorComponent } from './admin/books-editor/books-editor.component';
 import { UsersComponent } from './admin/users/users.component';
 import {MatDialogModule} from "@angular/material/dialog";
-import { ConfirmDeleteUserComponent } from './admin/users/confirm-delete-user/confirm-delete-user.component';
+import { ConfirmDeleteComponent } from './shared/components/confirm-delete-user/confirm-delete.component';
 import { EditUserDialogComponent } from './admin/users/edit-user-dialog/edit-user-dialog.component';
 import { PersonalDataComponent } from './user/personal-data/personal-data.component';
 import { UserBorrowingHistoryDialogComponent } from './admin/users/user-borrowing-history-dialog/user-borrowing-history-dialog.component';
@@ -33,7 +33,7 @@ import { ImageInputComponent } from './admin/books-editor/add-book-dialog/image-
 import { AddBookDialogComponent } from './admin/books-editor/add-book-dialog/add-book-dialog.component';
 
 @NgModule({
-  declarations: [AppComponent, SignUpComponent, HomePageComponent, HeaderComponent, UserComponent, AdminComponent, BooksViewComponent, HistoryComponent, NotificationsComponent, BooksEditorComponent, UsersComponent, ConfirmDeleteUserComponent, EditUserDialogComponent, PersonalDataComponent, UserBorrowingHistoryDialogComponent, ImageInputComponent, AddBookDialogComponent],
+  declarations: [AppComponent, SignUpComponent, HomePageComponent, HeaderComponent, UserComponent, AdminComponent, BooksViewComponent, HistoryComponent, NotificationsComponent, BooksEditorComponent, UsersComponent, ConfirmDeleteComponent, EditUserDialogComponent, PersonalDataComponent, UserBorrowingHistoryDialogComponent, ImageInputComponent, AddBookDialogComponent],
   imports: [BrowserModule, AppRoutingModule, MatIconModule, BrowserAnimationsModule,
     HttpClientModule, MatCardModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButtonModule, MatMenuModule, MatProgressBarModule, MatTableModule, MatBadgeModule, MatDialogModule],
   providers: [],
