@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 exports.signUp = async function (req, res) {
   if (req.body == null || req.body == undefined) {
-    res.status(400).send({ message: "Content can not be empty!" });
+    res.status(400).send("Content can not be empty!");
     return;
   }
 
@@ -38,7 +38,7 @@ exports.signUp = async function (req, res) {
 
 exports.get = async (req, res) => {
   if (req.params == null || req.params.id == null) {
-    res.status(400).send({ message: "User id missing!" });
+    res.status(400).send("User id missing!");
     return;
   }
 
@@ -48,7 +48,7 @@ exports.get = async (req, res) => {
 
 exports.update = async (req, res) => {
   if (req.params == null || req.params.id == null || req.body == null) {
-    res.status(400).send({ message: "Request content or user id missing!" });
+    res.status(400).send("Request content or user id missing!");
     return;
   }
 
@@ -70,16 +70,16 @@ exports.update = async (req, res) => {
     if (updated.acknowledged === true) {
       res.json(updated.matchedCount);
     } else {
-      res.status(400).send({ message: "Update operation was not acknowledged by the server" });
+      res.status(400).send("Update operation was not acknowledged by the server");
     }
   } catch (error) {
-    res.status(400).send({ message: "Error whend updating: " + error });
+    res.status(400).send("Error whend updating: " + error);
   }
 }
 
 exports.delete = async (req, res) => {
   if (req.params == null || req.params.id == null) {
-    res.status(400).send({ message: "User id missing!" });
+    res.status(400).send("User id missing!");
     return;
   }
 
@@ -88,10 +88,10 @@ exports.delete = async (req, res) => {
     if (deleted.acknowledged === true) {
       res.json(deleted.deletedCount);
     } else {
-      res.status(400).send({ message: "Delete operation was not acknowledged by the server" });
+      res.status(400).send("Delete operation was not acknowledged by the server");
     }
   } catch (error) {
-    res.status(400).send({ message: "Error whend deleting: " + error });
+    res.status(400).send("Error whend deleting: " + error);
   }
 };
 

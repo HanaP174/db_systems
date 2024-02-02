@@ -4,7 +4,7 @@ const { Book, BorrowedBook } = require("../model/library.model");
 exports.add = async (req, res) => {
   // Validate request
   if (req.body == null || req.body == undefined) {
-    res.status(400).send({ message: "Content can not be empty!" });
+    res.status(400).send("Content can not be empty!");
     return;
   }
 
@@ -35,7 +35,7 @@ exports.add = async (req, res) => {
 
 exports.get = async (req, res) => {
   if (req.params == null || req.params.id == null) {
-    res.status(400).send({ message: "Book id missing!" });
+    res.status(400).send("Book id missing!");
     return;
   }
 
@@ -45,7 +45,7 @@ exports.get = async (req, res) => {
 
 exports.update = async (req, res) => {
   if (req.params == null || req.params.id == null || req.body == null) {
-    res.status(400).send({ message: "Request content or book id missing!" });
+    res.status(400).send("Request content or book id missing!");
     return;
   }
 
@@ -67,16 +67,16 @@ exports.update = async (req, res) => {
     if (updated.acknowledged === true) {
       res.json(updated.matchedCount);
     } else {
-      res.status(400).send({ message: "Update operation was not acknowledged by the server" });
+      res.status(400).send("Update operation was not acknowledged by the server");
     }
   } catch (error) {
-    res.status(400).send({ message: "Error whend updating: " + error });
+    res.status(400).send("Error whend updating: " + error);
   }
 };
 
 exports.delete = async (req, res) => {
   if (req.params == null || req.params.id == null) {
-    res.status(400).send({ message: "Book id missing!" });
+    res.status(400).send("Book id missing!");
     return;
   }
 
@@ -85,10 +85,10 @@ exports.delete = async (req, res) => {
     if (deleted.acknowledged === true) {
       res.json(deleted.deletedCount);
     } else {
-      res.status(400).send({ message: "Delete operation was not acknowledged by the server" });
+      res.status(400).send("Delete operation was not acknowledged by the server");
     }
   } catch (error) {
-    res.status(400).send({ message: "Error whend deleting: " + error });
+    res.status(400).send("Error whend deleting: " + error);
   }
 };
 
@@ -99,7 +99,7 @@ exports.findAll = async (req, res) => {
 
 exports.userBorrowed = async (req, res) => {
   if (req.params == null || req.params.userId == null) {
-    res.status(400).send({ message: "User id missing!" });
+    res.status(400).send("User id missing!");
     return;
   }
 
@@ -109,7 +109,7 @@ exports.userBorrowed = async (req, res) => {
 
 exports.insertUpdateBorrowed = async (req, res) => {
   if (req.params == null || req.params.id == null || req.body == null) {
-    res.status(400).send({ message: "Request content or book id missing!" });
+    res.status(400).send("Request content or book id missing!");
     return;
   }
 
@@ -121,19 +121,21 @@ exports.insertUpdateBorrowed = async (req, res) => {
       const bookUpdated = await Book.updateOne({ _id: req.body.bookId }, { $set: { availableCopies: (book.availableCopies - 1) } });
       bookUpdatedMatch = bookUpdated.matchedCount;
     } else {
-      res.status(400).send({ message: "All books already returned" });
+      res.status(400).send("All books already returned");
+      return;
     }
   } else {
     if (book.availableCopies !== undefined && book.availableCopies < book.totalCopies) {
       const bookUpdated = await Book.updateOne({ _id: req.body.bookId }, { $set: { availableCopies: (book.availableCopies + 1) } });
       bookUpdatedMatch = bookUpdated.matchedCount;
     } else {
-      res.status(400).send({ message: "No available books" });
+      res.status(400).send("No available books");
+      return;
     }
   }
 
   if (bookUpdatedMatch === 0) {
-    res.status(400).send({ message: "Update operation for book was not acknowledged by the server" });
+    res.status(400).send("Update operation for book was not acknowledged by the server");
     return;
   }
 
@@ -176,10 +178,10 @@ exports.insertUpdateBorrowed = async (req, res) => {
       if (updated.acknowledged === true) {
         res.json(bookUpdatedMatch);
       } else {
-        res.status(400).send({ message: "Update operation for borrowed book was not acknowledged by the server" });
+        res.status(400).send("Update operation for borrowed book was not acknowledged by the server");
       }
     } catch (error) {
-      res.status(400).send({ message: "Error when updating: " + error });
+      res.status(400).send("Error when updating: " + error);
     }
   }
 }
