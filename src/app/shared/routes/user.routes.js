@@ -8,6 +8,15 @@ router.post("/user/add", userController.signUp);
 // Retrieve all users
 router.get("/user/list", userController.getAllUsers);
 
+// Get a user
+router.get("/book/:id", userController.get);
+
+// Edit a user
+router.put("/user/:id", userController.update);
+
+// Delete a user
+router.delete("/user/:id", userController.delete);
+
 // Login user
 router.post("/user/login", userController.login);
 

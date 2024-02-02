@@ -14,10 +14,10 @@ exports.signUp = async function (req, res) {
     password: req.body.password,
     birthNumber: req.body.birthNumber,
     address: {
-      street: req.body.street,
-      streetNumber: req.body.streetNumber,
-      zipcode: req.body.zipcode,
-      city: req.body.city,
+      street: req.body.address.street,
+      streetNumber: req.body.address.streetNumber,
+      zipcode: req.body.address.zipcode,
+      city: req.body.address.city,
     },
     role: "USER",
     activated: false
@@ -34,6 +34,65 @@ exports.signUp = async function (req, res) {
         error.message || "Something went wrong during signing up new user."
       });
     });
+};
+
+exports.get = async (req, res) => {
+  if (req.params == null || req.params.id == null) {
+    res.status(400).send({ message: "User id missing!" });
+    return;
+  }
+
+  const user = await User.find({ _id: req.params.id });
+  res.json(user);
+};
+
+exports.update = async (req, res) => {
+  if (req.params == null || req.params.id == null || req.body == null) {
+    res.status(400).send({ message: "Request content or user id missing!" });
+    return;
+  }
+
+  const filter = { _id: req.params.id };
+  const udpate = {
+    $set: {
+      name: req.body.name,
+      surname: req.body.surname,
+      role: req.body.role,
+      birthNumber: req.body.birthNumber,
+      address: req.body.address,
+      password: req.body.password,
+      activated: req.body.activated
+    }
+  };
+
+  try {
+    const updated = await User.updateOne(filter, udpate);
+    if (updated.acknowledged === true) {
+      res.json(updated.matchedCount);
+    } else {
+      res.status(400).send({ message: "Update operation was not acknowledged by the server" });
+    }
+  } catch (error) {
+    res.status(400).send({ message: "Error whend updating: " + error });
+  }
+}
+
+exports.delete = async (req, res) => {
+  if (req.params == null || req.params.id == null) {
+    res.status(400).send({ message: "User id missing!" });
+    return;
+  }
+
+  try {
+    const deleted = await User.deleteOne({ _id: req.params.id });
+    if (deleted.acknowledged === true) {
+      res.json(deleted.deletedCount);
+    } else {
+      res.status(400).send({ message: "Delete operation was not acknowledged by the server" });
+    }
+  } catch (error) {
+    res.status(400).send({ message: "Error whend deleting: " + error });
+  }
 };
 
 exports.getAllUsers = async (req, res) => {

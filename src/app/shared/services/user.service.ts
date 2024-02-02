@@ -17,4 +17,22 @@ export class UserService {
 
     return this.httpClient.get<User[]>(apiUrl);
   }
+
+  public getUser(userId: string): Observable<User> {
+    const apirUrl = `${this.API_BASE}/user/${userId}`;
+
+    return this.httpClient.get<User>(apirUrl);
+  }
+
+  public updateUser(userId: string, user: User): Observable<any> {
+    const apirUrl = `${this.API_BASE}/user/${userId}`;
+
+    return this.httpClient.put(apirUrl, user);
+  }
+
+  public deleteUser(userId: string): Observable<any> {
+    const apirUrl = `${this.API_BASE}/user/${userId}`;
+
+    return this.httpClient.delete(apirUrl);
+  }
 }
