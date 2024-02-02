@@ -41,10 +41,10 @@ export class EditUserDialogComponent {
       name: new FormControl(userModel.name, [Validators.required]),
       surname: new FormControl(userModel.surname, [Validators.required]),
       birthNumber: new FormControl(userModel.birthNumber, [Validators.required]),
-      street: new FormControl('', [Validators.required]),
-      zipcode: new FormControl('', [Validators.required]),
-      city: new FormControl('', [Validators.required]),
-      streetNumber: new FormControl('', [Validators.required]),
+      street: new FormControl(userModel.street, [Validators.required]),
+      zipcode: new FormControl(userModel.zipcode, [Validators.required]),
+      city: new FormControl(userModel.city, [Validators.required]),
+      streetNumber: new FormControl(userModel.streetNumber, [Validators.required]),
       username: new FormControl(userModel.username, [Validators.required]),
       password: new FormControl(userModel.password, [Validators.required]),
       activated: new FormControl(userModel.activated, [Validators.required])
@@ -60,15 +60,16 @@ export class EditUserDialogComponent {
     user.name = this.personalDataForm.get('name')?.value;
     user.surname = this.personalDataForm.get('surname')?.value;
     user.birthNumber = this.personalDataForm.get('birthNumber')?.value;
-    user.address.street = this.personalDataForm.get('street')?.value;
-    user.address.street = this.personalDataForm.get('streetNumber')?.value;
-    user.address.street = this.personalDataForm.get('city')?.value;
-    user.address.street = this.personalDataForm.get('zipcode')?.value;
-    user.username = this.personalDataForm.get('username')?.value; // todo considering some data read only???
+    user.address = {
+      street: this.personalDataForm.get('street')?.value,
+      streetNumber: this.personalDataForm.get('streetNumber')?.value,
+      city: this.personalDataForm.get('city')?.value,
+      zipcode: this.personalDataForm.get('zipcode')?.value
+    };
     user.password = this.personalDataForm.get('password')?.value;
     user.activated = this.personalDataForm.get('activated')?.value;
-
-    // todo address is not mapped properly....
+    user.role = this.user.role;
+    user.id = this.user.id;
 
     this.dialogRef.close(user);
   }
@@ -81,10 +82,10 @@ export class EditUserDialogComponent {
       birthNumber: this.user.birthNumber,
       username: this.user.username,
       password: this.user.password,
-      // street: this.user.address.street,
-      // zipcode: this.user.address.zipcode,
-      // city: this.user.address.city,
-      // streetNumber: this.user.address.streetNumber
+      street: this.user.address.street,
+      zipcode: this.user.address.zipcode,
+      city: this.user.address.city,
+      streetNumber: this.user.address.streetNumber,
       activated: this.user.activated
     } as UserModel;
   }

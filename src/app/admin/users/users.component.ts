@@ -1,13 +1,13 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
-import {Book, BorrowedBook, BorrowedBookModel, User} from "../../shared/model/LibraryModel";
-import {UserService} from "../../shared/services/user.service";
-import {AuthService} from "../../shared/services/auth-service";
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {ConfirmDeleteComponent} from "../../shared/components/confirm-delete-user/confirm-delete.component";
-import {EditUserDialogComponent} from "./edit-user-dialog/edit-user-dialog.component";
-import {catchError, forkJoin, of, Subscription} from "rxjs";
-import {BookService} from "../../shared/services/book.service";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatTableDataSource } from "@angular/material/table";
+import { Book, BorrowedBook, BorrowedBookModel, User } from "../../shared/model/LibraryModel";
+import { UserService } from "../../shared/services/user.service";
+import { AuthService } from "../../shared/services/auth-service";
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { ConfirmDeleteComponent } from "../../shared/components/confirm-delete-user/confirm-delete.component";
+import { EditUserDialogComponent } from "./edit-user-dialog/edit-user-dialog.component";
+import { catchError, forkJoin, of, Subscription } from "rxjs";
+import { BookService } from "../../shared/services/book.service";
 import {
   UserBorrowingHistoryDialogComponent
 } from "./user-borrowing-history-dialog/user-borrowing-history-dialog.component";
@@ -34,9 +34,9 @@ export class UsersComponent implements OnInit, OnDestroy {
   readonly DialogType = DialogType;
 
   constructor(private userService: UserService,
-              private authService: AuthService,
-              private dialog: MatDialog,
-              private bookService: BookService) {
+    private authService: AuthService,
+    private dialog: MatDialog,
+    private bookService: BookService) {
   }
 
   ngOnInit() {
@@ -85,7 +85,17 @@ export class UsersComponent implements OnInit, OnDestroy {
     const dialogOutput = this.dialog.open(ConfirmDeleteComponent, dialogConfig);
 
     dialogOutput.afterClosed().subscribe(shouldDelete => {
-      // todo delete user;
+      if (shouldDelete) {
+        this.userService.deleteUser(user.id).subscribe(d => {
+          if (!isNaN(d)) {
+            const idx = this.dataSource.data.indexOf(user);
+            this.dataSource.data.splice(idx, 1);
+            this.dataSource._updateChangeSubscription();
+          } else {
+            console.log(d.message);
+          }
+        });
+      }
     });
   }
 
@@ -98,7 +108,24 @@ export class UsersComponent implements OnInit, OnDestroy {
     const dialogOutput = this.dialog.open(EditUserDialogComponent, dialogConfig);
 
     dialogOutput.afterClosed().subscribe(editedUser => {
-      // todo edit user;
+      if (editedUser) {
+        this.userService.updateUser(user.id, editedUser).subscribe(d => {
+          if (!isNaN(d)) {
+            const idx = this.dataSource.data.findIndex(u => u.id === user.id);
+            this.dataSource.data[idx].name = editedUser.name,
+              this.dataSource.data[idx].surname = editedUser.surname,
+              this.dataSource.data[idx].birthNumber = editedUser.birthNumber,
+              this.dataSource.data[idx].address.street = editedUser.address.street,
+              this.dataSource.data[idx].address.zipcode = editedUser.address.zipcode,
+              this.dataSource.data[idx].address.city = editedUser.address.city,
+              this.dataSource.data[idx].address.streetNumber = editedUser.address.streetNumber,
+              this.dataSource.data[idx].password = editedUser.password,
+              this.dataSource.data[idx].activated = editedUser.activated
+          } else {
+            console.log(d.message);
+          }
+        });
+      }
     });
   }
 
@@ -126,20 +153,16 @@ export class UsersComponent implements OnInit, OnDestroy {
           });
         }
       });
-      this.showUserBorrowingHistory(userBookHistory);
+      this.showUserBorrowingHistory(userId, userBookHistory);
     });
   }
 
-  private showUserBorrowingHistory(userBookHistory: BorrowedBookModel[]) {
+  private showUserBorrowingHistory(userId: string, borrowedBooks: BorrowedBookModel[]) {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = userBookHistory;
+    dialogConfig.data = { userId, borrowedBooks };
     dialogConfig.width = '85rem';
 
     dialogConfig.disableClose = true;
     const dialogOutput = this.dialog.open(UserBorrowingHistoryDialogComponent, dialogConfig);
-
-    dialogOutput.afterClosed().subscribe(() => {
-      // todo possibility to return books? or in the dialog?
-    });
   }
 }
