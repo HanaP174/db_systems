@@ -12,10 +12,10 @@ export class BookService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public addBook(book: Book) {
+  public addBook(book: Book): Observable<any> {
     const apirUrl = `${this.API_BASE}/book/add`;
 
-    this.httpClient.post(apirUrl, book);
+    return this.httpClient.post(apirUrl, book);
   }
 
   public getAllBooks(): Observable<Book[]> {
@@ -30,16 +30,16 @@ export class BookService {
     return this.httpClient.get<Book>(apirUrl);
   }
 
-  public updateBook(bookId: string, book: Book) {
+  public updateBook(bookId: string, book: Book): Observable<any> {
     const apirUrl = `${this.API_BASE}/book/${bookId}`;
 
-    this.httpClient.put(apirUrl, book);
+    return this.httpClient.put(apirUrl, book);
   }
 
-  public deleteBook(bookId: string) {
+  public deleteBook(bookId: string): Observable<any> {
     const apirUrl = `${this.API_BASE}/book/${bookId}`;
 
-    this.httpClient.delete(apirUrl);
+    return this.httpClient.delete(apirUrl);
   }
 
   public insertUpdateBorrowedBook(bookId: string, borrowedBook: BorrowedBook): Observable<any> {
