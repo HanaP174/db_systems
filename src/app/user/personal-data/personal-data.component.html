@@ -66,9 +66,8 @@
   <div class="row">
     <div class="col">
       <mat-form-field class="input-field" appearance="outline">
-        <mat-error *ngIf="personalDataForm.getError('username')?.hasError('required')">Username is required</mat-error>
         <mat-label>Username</mat-label>
-        <input matInput formControlName="username" required>
+        <input matInput formControlName="username" readonly>
       </mat-form-field>
     </div>
     <div class="col">

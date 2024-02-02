@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../../shared/services/auth-service";
-import {User} from "../../shared/model/LibraryModel";
-import {Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { AuthService } from "../../shared/services/auth-service";
+import { UserService } from 'src/app/shared/services/user.service';
+import { User } from "../../shared/model/LibraryModel";
+import { Router } from "@angular/router";
 
 export class UserModel {
   id: string = '';
@@ -29,9 +30,10 @@ export class PersonalDataComponent implements OnInit {
 
   private user: User = new User();
 
-  constructor (private formBuilder: FormBuilder,
-               private authService: AuthService,
-               private router: Router) {}
+  constructor(private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private userService: UserService,
+    private router: Router) { }
 
   ngOnInit() {
     this.user = this.authService.user;
@@ -41,12 +43,12 @@ export class PersonalDataComponent implements OnInit {
       name: new FormControl(userModel.name, [Validators.required]),
       surname: new FormControl(userModel.surname, [Validators.required]),
       birthNumber: new FormControl(userModel.birthNumber, [Validators.required]),
-      street: new FormControl('', [Validators.required]),
-      zipcode: new FormControl('', [Validators.required]),
-      city: new FormControl('', [Validators.required]),
-      streetNumber: new FormControl('', [Validators.required]),
+      street: new FormControl(userModel.street, [Validators.required]),
+      zipcode: new FormControl(userModel.zipcode, [Validators.required]),
+      city: new FormControl(userModel.city, [Validators.required]),
+      streetNumber: new FormControl(userModel.streetNumber, [Validators.required]),
       username: new FormControl(userModel.username, [Validators.required]),
-      password: new FormControl(userModel.password, [Validators.required])
+      password: new FormControl(userModel.password, [Validators.required]),
     })
   }
 
@@ -55,15 +57,23 @@ export class PersonalDataComponent implements OnInit {
     user.name = this.personalDataForm.get('name')?.value;
     user.surname = this.personalDataForm.get('surname')?.value;
     user.birthNumber = this.personalDataForm.get('birthNumber')?.value;
-    user.address.street = this.personalDataForm.get('street')?.value;
-    user.address.street = this.personalDataForm.get('streetNumber')?.value;
-    user.address.street = this.personalDataForm.get('city')?.value;
-    user.address.street = this.personalDataForm.get('zipcode')?.value;
-    user.username = this.personalDataForm.get('username')?.value;
+    user.address = {
+      street: this.personalDataForm.get('street')?.value,
+      streetNumber: this.personalDataForm.get('streetNumber')?.value,
+      city: this.personalDataForm.get('city')?.value,
+      zipcode: this.personalDataForm.get('zipcode')?.value
+    };
     user.password = this.personalDataForm.get('password')?.value;
+    user.role = this.user.role;
+    user.id = this.user.id;
 
-    // todo change user
-    // todo address is not mapped properly....
+    this.userService.updateUser(this.user.id, user).subscribe(d => {
+      if (!isNaN(d)) {
+        this.user = user;
+      } else {
+        console.log(d.message);
+      }
+    });
   }
 
   logout() {
@@ -81,11 +91,11 @@ export class PersonalDataComponent implements OnInit {
       surname: this.user.surname,
       birthNumber: this.user.birthNumber,
       username: this.user.username,
-      password: this.user.password
-      // street: this.user.address.street,
-      // zipcode: this.user.address.zipcode,
-      // city: this.user.address.city,
-      // streetNumber: this.user.address.streetNumber
+      password: this.user.password,
+      street: this.user.address.street,
+      zipcode: this.user.address.zipcode,
+      city: this.user.address.city,
+      streetNumber: this.user.address.streetNumber
     } as UserModel;
   }
 }
