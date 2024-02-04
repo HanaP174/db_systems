@@ -3,6 +3,16 @@ import { Book } from "../../shared/model/LibraryModel";
 import { MatTableDataSource } from "@angular/material/table";
 import { AuthService } from "../../shared/services/auth-service";
 import { BookService } from "../../shared/services/book.service";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {ConfirmDeleteComponent} from "../../shared/components/confirm-delete-user/confirm-delete.component";
+import {AddBookDialogComponent} from "./add-book-dialog/add-book-dialog.component";
+import {WarningDialogComponent} from "../../shared/components/warning-dialog/warning-dialog.component";
+
+export enum DialogType {
+  EDIT = 'EDIT',
+  DELETE = 'DELETE',
+  BORROW = 'BORROW'
+}
 
 @Component({
   selector: 'app-books-editor',
@@ -15,8 +25,11 @@ export class BooksEditorComponent implements OnInit {
   displayedColumns: string[] = ['cover', 'title', 'author', 'numberOfPages', 'year', 'availableCopies'];
   dataSource = new MatTableDataSource<Book>;
 
+  readonly DialogType = DialogType;
+
   constructor(private authService: AuthService,
-    private bookService: BookService) {
+              private bookService: BookService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -33,6 +46,15 @@ export class BooksEditorComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  openDialog(book: Book, dialogType: DialogType) {
+    if (dialogType === DialogType.DELETE) {
+      this.deleteBook(book);
+    } else if (dialogType === DialogType.EDIT) {
+      this.editBook(book);
+    } else if (dialogType === DialogType.BORROW) {
+    }
   }
 
   addBook() {
@@ -70,26 +92,55 @@ export class BooksEditorComponent implements OnInit {
     });
   }
 
-  deleteBook() {
-    // TODO Get bookId
-    const bookId = '65bf5b0daec404630b13df15';
+  private initDataSource() {
+    this.bookService.getAllBooks().subscribe((books) => {
+      this.books = books;
+      this.dataSource.data = books;
+    });
+  }
 
-    const bookToDelete = this.dataSource.data.find(b => b.id === bookId);
-    
-    if (bookToDelete?.availableCopies !== bookToDelete?.totalCopies) {
-      // TODO alert
-      console.log("The operation was abandoned because not all books were returned.")
-    }
+  private deleteBook(book: Book) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = 'Are you sure you want to delete this book?';
 
-    this.bookService.deleteBook(bookId).subscribe(d => {
-      if (!isNaN(d)) {
-        const idx = this.dataSource.data.findIndex(b => b.id === bookId);
-        this.dataSource.data.splice(idx, 1);
-        this.dataSource._updateChangeSubscription();
-      } else {
-        console.log(d.message);
+    dialogConfig.disableClose = true;
+    const dialogOutput = this.dialog.open(ConfirmDeleteComponent, dialogConfig);
+
+    dialogOutput.afterClosed().subscribe(shouldDelete => {
+      if (shouldDelete) {
+        this.deleteExistingBook(book);
       }
     });
   }
 
+  private addNewBook(book: Book) {
+    this.bookService.addBook(book).subscribe(d => {
+      if (isNaN(d)) {
+        this.dataSource.data.push(d);
+        this.dataSource._updateChangeSubscription();
+      } else {
+        console.log(d)
+      }
+    });
+  }
+
+  private deleteExistingBook(book: Book) {
+    if (book.availableCopies !== book.totalCopies) {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.data = 'The operation was abandoned because not all books were returned.';
+
+      dialogConfig.disableClose = true;
+      this.dialog.open(WarningDialogComponent, dialogConfig);
+    } else {
+      this.bookService.deleteBook(book.id).subscribe(d => {
+        if (!isNaN(d)) {
+          const idx = this.dataSource.data.findIndex(b => b.id === book.id);
+          this.dataSource.data.splice(idx, 1);
+          this.dataSource._updateChangeSubscription();
+        } else {
+          console.log(d.message);
+        }
+      });
+    }
+  }
 }

@@ -29,11 +29,13 @@ import { ConfirmDeleteComponent } from './shared/components/confirm-delete-user/
 import { EditUserDialogComponent } from './admin/users/edit-user-dialog/edit-user-dialog.component';
 import { PersonalDataComponent } from './user/personal-data/personal-data.component';
 import { UserBorrowingHistoryDialogComponent } from './admin/users/user-borrowing-history-dialog/user-borrowing-history-dialog.component';
-import { ImageInputComponent } from './admin/books-editor/add-book-dialog/image-input/image-input.component';
+import { ImageInputComponent } from './admin/books-editor/image-input/image-input.component';
 import { AddBookDialogComponent } from './admin/books-editor/add-book-dialog/add-book-dialog.component';
+import { EditBookDialogComponent } from './admin/books-editor/edit-book-dialog/edit-book-dialog.component';
+import { WarningDialogComponent } from './shared/components/warning-dialog/warning-dialog.component';
 
 @NgModule({
-  declarations: [AppComponent, SignUpComponent, HomePageComponent, HeaderComponent, UserComponent, AdminComponent, BooksViewComponent, HistoryComponent, NotificationsComponent, BooksEditorComponent, UsersComponent, ConfirmDeleteComponent, EditUserDialogComponent, PersonalDataComponent, UserBorrowingHistoryDialogComponent, ImageInputComponent, AddBookDialogComponent],
+  declarations: [AppComponent, SignUpComponent, HomePageComponent, HeaderComponent, UserComponent, AdminComponent, BooksViewComponent, HistoryComponent, NotificationsComponent, BooksEditorComponent, UsersComponent, ConfirmDeleteComponent, EditUserDialogComponent, PersonalDataComponent, UserBorrowingHistoryDialogComponent, ImageInputComponent, AddBookDialogComponent, EditBookDialogComponent, WarningDialogComponent],
   imports: [BrowserModule, AppRoutingModule, MatIconModule, BrowserAnimationsModule,
     HttpClientModule, MatCardModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButtonModule, MatMenuModule, MatProgressBarModule, MatTableModule, MatBadgeModule, MatDialogModule],
   providers: [],
