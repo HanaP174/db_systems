@@ -57,7 +57,7 @@ export class Notification {
   userId: string = '';
   description: string = '';
   published: boolean = false;
-  type: string = '';
+  type: NotificationType = NotificationType.NEW_ACCOUNT;
 }
 
 export enum NotificationType {

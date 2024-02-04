@@ -1,1 +1,58 @@
-<p>notifications works!</p>
+<app-header>
+  <button class="menu-button" mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>logout</span>
+    </button>
+  </mat-menu>
+</app-header>
+<div class="notifications-wrapper">
+  <mat-card class="notification-card">
+    <mat-card-header>
+      <mat-card-title>New Accounts</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="card-content">
+      <mat-divider></mat-divider>
+      <mat-selection-list role="listbox">
+        <mat-list-option *ngFor="let notification of newAccounts"
+            [value]="notification"
+            (selectedChange)="onSelect($event, SelectedType.NEW, notification)">
+          {{notification.description}}
+        </mat-list-option>
+      </mat-selection-list>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-card-actions>
+      <div class="button">
+        <button mat-raised-button color="primary" (click)="approve(SelectedType.NEW)">APPROVE</button>
+      </div>
+      <button mat-raised-button color="warn" (click)="decline(SelectedType.NEW)">DECLINE</button>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card class="notification-card">
+    <mat-card-header>
+      <mat-card-title>Edited Accounts</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="card-content">
+      <mat-divider></mat-divider>
+      <mat-selection-list>
+        <mat-list-option *ngFor="let notification of editedAccounts"
+                         [value]="notification"
+                         (select)="onSelect($event, SelectedType.NEW, notification)">
+          {{notification.description}}
+        </mat-list-option>
+      </mat-selection-list>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-card-actions>
+      <div class="button">
+        <button mat-raised-button color="primary" (click)="approve(SelectedType.EDITED)">APPROVE</button>
+      </div>
+      <button mat-raised-button color="warn" (click)="decline(SelectedType.EDITED)">DECLINE</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

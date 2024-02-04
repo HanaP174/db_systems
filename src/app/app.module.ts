@@ -33,11 +33,12 @@ import { ImageInputComponent } from './admin/books-editor/image-input/image-inpu
 import { AddBookDialogComponent } from './admin/books-editor/add-book-dialog/add-book-dialog.component';
 import { EditBookDialogComponent } from './admin/books-editor/edit-book-dialog/edit-book-dialog.component';
 import { WarningDialogComponent } from './shared/components/warning-dialog/warning-dialog.component';
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [AppComponent, SignUpComponent, HomePageComponent, HeaderComponent, UserComponent, AdminComponent, BooksViewComponent, HistoryComponent, NotificationsComponent, BooksEditorComponent, UsersComponent, ConfirmDeleteComponent, EditUserDialogComponent, PersonalDataComponent, UserBorrowingHistoryDialogComponent, ImageInputComponent, AddBookDialogComponent, EditBookDialogComponent, WarningDialogComponent],
   imports: [BrowserModule, AppRoutingModule, MatIconModule, BrowserAnimationsModule,
-    HttpClientModule, MatCardModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButtonModule, MatMenuModule, MatProgressBarModule, MatTableModule, MatBadgeModule, MatDialogModule],
+    HttpClientModule, MatCardModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButtonModule, MatMenuModule, MatProgressBarModule, MatTableModule, MatBadgeModule, MatDialogModule, MatListModule],
   providers: [],
   exports: [
     HeaderComponent

@@ -1,8 +1,9 @@
 import {Component, OnInit} from "@angular/core";
 import {AuthService} from "../shared/services/auth-service";
 import {Router} from "@angular/router";
-import {User} from "../shared/model/LibraryModel";
+import {Notification, NotificationType, User} from "../shared/model/LibraryModel";
 import {UserService} from "../shared/services/user.service";
+import {NotificationService} from "../shared/services/notification.service";
 
 @Component({
   selector: 'admin',
@@ -14,13 +15,14 @@ export class AdminComponent implements OnInit {
   users: User[] = [];
   approvedUsers = 0;
   pendingUsers = 0;
+  notifications: Notification[] = [];
 
   constructor(private authService: AuthService,
               private router: Router,
-              private userService: UserService) {
+              private userService: UserService,
+              private notificationService: NotificationService) {
   }
 
-  // todo load notification, users, library
   ngOnInit() {
     this.init();
   }
@@ -41,6 +43,17 @@ export class AdminComponent implements OnInit {
     this.router.navigate(['/library']);
   }
 
+  getNotificationDescription(notification: Notification) {
+    switch (notification.type) {
+      case NotificationType.NEW_ACCOUNT:
+        return 'NEW ACCOUNT: ' + notification.description;
+      case NotificationType.ACCOUNT_CHANGE:
+        return 'ACCOUNT CHANGE: ' + notification.description;
+      default:
+        return notification.description;
+    }
+  }
+
   private init() {
     this.userService.getAllUsers().subscribe(response => {
       if (response) {
@@ -49,6 +62,11 @@ export class AdminComponent implements OnInit {
         this.approvedUsers = this.users.filter(user => user.activated).length;
       }
     });
+    this.notificationService.getAllNotifications().subscribe(response => {
+      if (response) {
+        this.notifications = response;
+      }
+    })
   }
 
 }
