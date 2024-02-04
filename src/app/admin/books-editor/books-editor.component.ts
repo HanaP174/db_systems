@@ -55,34 +55,31 @@ export class BooksEditorComponent implements OnInit {
   }
 
   addBook() {
-    // TODO Get book from a form
-    const bookToAdd = new Book();
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '85rem';
 
-    this.bookService.addBook(bookToAdd).subscribe(d => {
-      if (isNaN(d)) {
-        this.dataSource.data.push(d);
-        this.dataSource._updateChangeSubscription();
-      } else {
-        console.log(d)
+    dialogConfig.disableClose = true;
+    const dialogOutput = this.dialog.open(AddBookDialogComponent, dialogConfig);
+
+    dialogOutput.afterClosed().subscribe(book => {
+      if (book) {
+        this.addNewBook(book);
       }
     });
   }
 
-  editBook() {
-    // TODO Get bookId and book from a form
-    const bookId = '65bf5b0daec404630b13df15';
-    const bookToEdit = new Book();
-
-    this.bookService.updateBook(bookId, bookToEdit).subscribe(d => {
+  editBook(book: Book) {
+    // todo dialog
+    this.bookService.updateBook(book.id, book).subscribe(d => {
       if (!isNaN(d)) {
-        const idx = this.dataSource.data.findIndex(b => b.id === bookId);
-        this.dataSource.data[idx].title = bookToEdit.title;
-        this.dataSource.data[idx].author = bookToEdit.author;
-        this.dataSource.data[idx].numberOfPages = bookToEdit.numberOfPages;
-        this.dataSource.data[idx].cover = bookToEdit.cover;
-        this.dataSource.data[idx].year = bookToEdit.year;
-        this.dataSource.data[idx].availableCopies = bookToEdit.availableCopies;
-        this.dataSource.data[idx].totalCopies = bookToEdit.totalCopies;
+        const idx = this.dataSource.data.findIndex(b => b.id === book.id);
+        this.dataSource.data[idx].title = book.title;
+        this.dataSource.data[idx].author = book.author;
+        this.dataSource.data[idx].numberOfPages = book.numberOfPages;
+        this.dataSource.data[idx].cover = book.cover;
+        this.dataSource.data[idx].year = book.year;
+        this.dataSource.data[idx].availableCopies = book.availableCopies;
+        this.dataSource.data[idx].totalCopies = book.totalCopies;
       } else {
         console.log(d)
       }

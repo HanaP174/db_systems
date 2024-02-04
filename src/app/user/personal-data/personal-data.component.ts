@@ -37,7 +37,6 @@ export class PersonalDataComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.authService.user;
-    console.log(this.user);
     const userModel = this.getUserModel();
     this.personalDataForm = this.formBuilder.group({
       name: new FormControl(userModel.name, [Validators.required]),
