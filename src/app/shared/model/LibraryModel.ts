@@ -59,3 +59,10 @@ export class Notification {
   published: Date = new Date(Number.MIN_SAFE_INTEGER);
   type: string = '';
 }
+
+export enum NotificationType {
+  NEW_ACCOUNT = 'NEW_ACCOUNT',
+  ACCOUNT_CHANGE = 'ACCOUNT_CHANGE',
+  APPROVED = 'APPROVED',
+  DECLINED = 'DECLINED' // toto sme asi mysleli pre usera aj s approved ale vyprdla by som sa na to
+}
