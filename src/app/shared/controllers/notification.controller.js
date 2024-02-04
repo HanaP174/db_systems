@@ -8,8 +8,8 @@ exports.add = async function (req, res) {
 
   const notification = new Notification({
     userId: req.body.userId,
-    description: req.body.name.description,
-    published: req.body.name.published,
+    description: req.body.description,
+    published: req.body.published,
     type: req.body.type
   });
 
