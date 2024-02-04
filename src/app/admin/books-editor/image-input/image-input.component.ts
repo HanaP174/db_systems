@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {UntypedFormBuilder} from "@angular/forms";
 
 @Component({
@@ -6,15 +6,24 @@ import {UntypedFormBuilder} from "@angular/forms";
   templateUrl: './image-input.component.html',
   styleUrls: ['./image-input.component.css']
 })
-export class ImageInputComponent {
+export class ImageInputComponent implements OnChanges {
 
-  @Output() image = new EventEmitter<string>();
+  @Input() image = '';
+  @Output() submitImage = new EventEmitter<string>();
 
   editForm = this.fb.group({
-    photo: []
+    photo: this.image != null ? this.image : []
   });
 
   constructor(private fb: UntypedFormBuilder) { }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['image']) {
+      this.editForm = this.fb.group({
+        photo: this.image != null ? this.image : []
+      });
+    }
+  }
 
   setFileData(event: Event): void {
     const eventTarget: HTMLInputElement | null = event.target as HTMLInputElement | null;
@@ -23,7 +32,7 @@ export class ImageInputComponent {
       const reader = new FileReader();
       reader.addEventListener('load', () => {
         this.editForm.get('photo')?.setValue(reader.result as string);
-        this.image.emit(reader.result as string);
+        this.submitImage.emit(reader.result as string);
       });
       reader.readAsDataURL(file);
     }

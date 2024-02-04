@@ -7,6 +7,7 @@ import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {ConfirmDeleteComponent} from "../../shared/components/confirm-delete-user/confirm-delete.component";
 import {AddBookDialogComponent} from "./add-book-dialog/add-book-dialog.component";
 import {WarningDialogComponent} from "../../shared/components/warning-dialog/warning-dialog.component";
+import {EditBookDialogComponent} from "./edit-book-dialog/edit-book-dialog.component";
 
 export enum DialogType {
   EDIT = 'EDIT',
@@ -69,19 +70,29 @@ export class BooksEditorComponent implements OnInit {
   }
 
   editBook(book: Book) {
-    // todo dialog
-    this.bookService.updateBook(book.id, book).subscribe(d => {
-      if (!isNaN(d)) {
-        const idx = this.dataSource.data.findIndex(b => b.id === book.id);
-        this.dataSource.data[idx].title = book.title;
-        this.dataSource.data[idx].author = book.author;
-        this.dataSource.data[idx].numberOfPages = book.numberOfPages;
-        this.dataSource.data[idx].cover = book.cover;
-        this.dataSource.data[idx].year = book.year;
-        this.dataSource.data[idx].availableCopies = book.availableCopies;
-        this.dataSource.data[idx].totalCopies = book.totalCopies;
-      } else {
-        console.log(d)
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = book;
+    dialogConfig.width = '85rem';
+
+    dialogConfig.disableClose = true;
+    const dialogOutput = this.dialog.open(EditBookDialogComponent, dialogConfig);
+
+    dialogOutput.afterClosed().subscribe(book => {
+      if (book) {
+        this.bookService.updateBook(book.id, book).subscribe(d => {
+          if (!isNaN(d)) {
+            const idx = this.dataSource.data.findIndex(b => b.id === book.id);
+            this.dataSource.data[idx].title = book.title;
+            this.dataSource.data[idx].author = book.author;
+            this.dataSource.data[idx].numberOfPages = book.numberOfPages;
+            this.dataSource.data[idx].cover = book.cover;
+            this.dataSource.data[idx].year = book.year;
+            this.dataSource.data[idx].availableCopies = book.availableCopies;
+            this.dataSource.data[idx].totalCopies = book.totalCopies;
+          } else {
+            console.log(d)
+          }
+        });
       }
     });
   }
