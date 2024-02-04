@@ -56,7 +56,7 @@ export class Notification {
   id: string = '';
   userId: string = '';
   description: string = '';
-  published: Date = new Date(Number.MIN_SAFE_INTEGER);
+  published: boolean = false;
   type: string = '';
 }
 

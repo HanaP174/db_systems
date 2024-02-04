@@ -32,7 +32,6 @@ export class EditUserDialogComponent {
 
   constructor(private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<EditUserDialogComponent>,
-    private notificationService: NotificationService,
     @Inject(MAT_DIALOG_DATA) user: User) {
     this.user = user;
   }
@@ -72,18 +71,6 @@ export class EditUserDialogComponent {
     user.activated = this.personalDataForm.get('activated')?.value;
     user.role = this.user.role;
     user.id = this.user.id;
-
-    let notification = new Notification();
-    notification.userId = user.id;
-    notification.description = `User ${user.username} edited personal data.`;
-    notification.published = new Date();
-    notification.type = 'UserFormEdited';
-
-    this.notificationService.addNotification(notification).subscribe(d => {
-      if (!isNaN(d)) {
-        console.log(d);
-      }
-    });
 
     this.dialogRef.close(user);
   }

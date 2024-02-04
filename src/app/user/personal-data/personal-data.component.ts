@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { AuthService } from "../../shared/services/auth-service";
 import { UserService } from 'src/app/shared/services/user.service';
-import { User } from "../../shared/model/LibraryModel";
+import { Notification, NotificationType, User } from "../../shared/model/LibraryModel";
 import { Router } from "@angular/router";
+import { NotificationService } from 'src/app/shared/services/notification.service';
 
 export class UserModel {
   id: string = '';
@@ -33,6 +34,7 @@ export class PersonalDataComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private authService: AuthService,
     private userService: UserService,
+    private notificationService: NotificationService,
     private router: Router) { }
 
   ngOnInit() {
@@ -69,6 +71,18 @@ export class PersonalDataComponent implements OnInit {
     this.userService.updateUser(this.user.id, user).subscribe(d => {
       if (!isNaN(d)) {
         this.user = user;
+      
+        let notification = new Notification();
+        notification.userId = this.user.id;
+        notification.description = `User with id ${this.user.id} edited personal data.`;
+        notification.type = NotificationType.ACCOUNT_CHANGE;
+    
+        this.notificationService.addNotification(notification).subscribe(d => {
+          if (!isNaN(d)) {
+            console.log(d);
+          }
+        });
+        this.notificationService.addNotification
       } else {
         console.log(d.message);
       }

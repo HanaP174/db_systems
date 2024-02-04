@@ -15,8 +15,7 @@ export class SignUpComponent implements OnInit {
   hide = true;
 
   constructor(private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private notificationService: NotificationService) { }
+    private authService: AuthService) { }
 
   ngOnInit() {
     this.signUpForm = this.formBuilder.group({
@@ -45,18 +44,6 @@ export class SignUpComponent implements OnInit {
     }
     user.username = this.signUpForm.get('username')?.value;
     user.password = this.signUpForm.get('password')?.value;
-
-    let notification = new Notification();
-    notification.userId = user.id;
-    notification.description = `A new user ${user.username} completed the signup form.`;
-    notification.published = new Date();
-    notification.type = 'UserFormAdded';
-
-    this.notificationService.addNotification(notification).subscribe(d => {
-      if (!isNaN(d)) {
-        console.log(d);
-      }
-    });
 
     this.authService.signUpUser(user);
   }

@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Subject} from "rxjs";
-import {User, UserAuth} from "../model/LibraryModel";
+import {Notification, NotificationType, User, UserAuth} from "../model/LibraryModel";
 import {Router} from "@angular/router";
 
 @Injectable({providedIn: 'root'})
@@ -28,10 +28,19 @@ export class AuthService {
   constructor(private httpClient: HttpClient,
               private router: Router) {}
 
-  signUpUser(user: User){
-    this.httpClient.post('http://localhost:8080/api/library/user/add', user).subscribe(res => {
-      if (res) {
-        this.router.navigate(['/home'])
+  signUpUser(user: User) {
+    this.httpClient.post('http://localhost:8080/api/library/user/add', user).subscribe((user: any) => {
+      if (user) {
+        const notification = new Notification();
+        notification.userId = user.id;
+        notification.description = `A new user ${user.username} completed the signup form.`;
+        notification.type = NotificationType.NEW_ACCOUNT;
+
+        this.httpClient.post('http://localhost:8080/api/library/notification/add', notification).subscribe((d: any) => {
+          if (d) {
+            this.router.navigate(['/home']);
+          }
+        });
       }
     })
   }
