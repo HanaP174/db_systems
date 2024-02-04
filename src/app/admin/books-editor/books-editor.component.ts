@@ -74,6 +74,13 @@ export class BooksEditorComponent implements OnInit {
     // TODO Get bookId
     const bookId = '65bf5b0daec404630b13df15';
 
+    const bookToDelete = this.dataSource.data.find(b => b.id === bookId);
+    
+    if (bookToDelete?.availableCopies !== bookToDelete?.totalCopies) {
+      // TODO alert
+      console.log("The operation was abandoned because not all books were returned.")
+    }
+
     this.bookService.deleteBook(bookId).subscribe(d => {
       if (!isNaN(d)) {
         const idx = this.dataSource.data.findIndex(b => b.id === bookId);

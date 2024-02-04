@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {User} from "../../shared/model/LibraryModel";
-import {AuthService} from "../../shared/services/auth-service";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { Notification, User } from "../../shared/model/LibraryModel";
+import { AuthService } from "../../shared/services/auth-service";
+import { NotificationService } from 'src/app/shared/services/notification.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -13,8 +14,9 @@ export class SignUpComponent implements OnInit {
   signUpForm: FormGroup = new FormGroup({});
   hide = true;
 
-  constructor (private formBuilder: FormBuilder,
-               private authService: AuthService) {}
+  constructor(private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private notificationService: NotificationService) { }
 
   ngOnInit() {
     this.signUpForm = this.formBuilder.group({
@@ -43,6 +45,18 @@ export class SignUpComponent implements OnInit {
     }
     user.username = this.signUpForm.get('username')?.value;
     user.password = this.signUpForm.get('password')?.value;
+
+    let notification = new Notification();
+    notification.userId = user.id;
+    notification.description = `A new user ${user.username} completed the signup form.`;
+    notification.published = new Date();
+    notification.type = 'UserFormAdded';
+
+    this.notificationService.addNotification(notification).subscribe(d => {
+      if (!isNaN(d)) {
+        console.log(d);
+      }
+    });
 
     this.authService.signUpUser(user);
   }

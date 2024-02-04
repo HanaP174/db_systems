@@ -51,3 +51,11 @@ export interface BorrowedBookModel {
   returnDate?: Date;
   isReturned: boolean;
 }
+
+export class Notification {
+  id: string = '';
+  userId: string = '';
+  description: string = '';
+  published: Date = new Date(Number.MIN_SAFE_INTEGER);
+  type: string = '';
+}

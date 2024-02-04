@@ -77,6 +77,18 @@ export class UsersComponent implements OnInit, OnDestroy {
     return users.filter(user => user.id != this.authService.user.id);
   }
 
+  // TODO Get user from a form
+  private addUser(user: User) {
+    this.userService.addUser(user).subscribe(d => {
+      if (isNaN(d)) {
+        this.dataSource.data.push(d);
+        this.dataSource._updateChangeSubscription();
+      } else {
+        console.log(d)
+      }
+    });
+  }
+
   private deleteUser(user: User) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = 'Are you sure you want to delete user?';
@@ -112,15 +124,15 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.userService.updateUser(user.id, editedUser).subscribe(d => {
           if (!isNaN(d)) {
             const idx = this.dataSource.data.findIndex(u => u.id === user.id);
-            this.dataSource.data[idx].name = editedUser.name,
-              this.dataSource.data[idx].surname = editedUser.surname,
-              this.dataSource.data[idx].birthNumber = editedUser.birthNumber,
-              this.dataSource.data[idx].address.street = editedUser.address.street,
-              this.dataSource.data[idx].address.zipcode = editedUser.address.zipcode,
-              this.dataSource.data[idx].address.city = editedUser.address.city,
-              this.dataSource.data[idx].address.streetNumber = editedUser.address.streetNumber,
-              this.dataSource.data[idx].password = editedUser.password,
-              this.dataSource.data[idx].activated = editedUser.activated
+            this.dataSource.data[idx].name = editedUser.name;
+            this.dataSource.data[idx].surname = editedUser.surname;
+            this.dataSource.data[idx].birthNumber = editedUser.birthNumber;
+            this.dataSource.data[idx].address.street = editedUser.address.street;
+            this.dataSource.data[idx].address.zipcode = editedUser.address.zipcode;
+            this.dataSource.data[idx].address.city = editedUser.address.city;
+            this.dataSource.data[idx].address.streetNumber = editedUser.address.streetNumber;
+            this.dataSource.data[idx].password = editedUser.password;
+            this.dataSource.data[idx].activated = editedUser.activated
           } else {
             console.log(d.message);
           }

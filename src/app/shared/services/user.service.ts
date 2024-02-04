@@ -12,6 +12,12 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) { }
 
+  public addUser(user: User): Observable<any> {
+    const apirUrl = `${this.API_BASE}/user/add`;
+
+    return this.httpClient.post(apirUrl, user);
+  }
+
   public getAllUsers(): Observable<User[]> {
     const apiUrl = `${this.API_BASE}/user/list`;
 

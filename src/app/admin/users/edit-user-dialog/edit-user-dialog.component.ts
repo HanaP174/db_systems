@@ -1,7 +1,8 @@
-import {Component, Inject} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {User} from "../../../shared/model/LibraryModel";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import { Component, Inject } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { Notification, User } from "../../../shared/model/LibraryModel";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { NotificationService } from 'src/app/shared/services/notification.service';
 
 export class UserModel {
   id: string = '';
@@ -29,9 +30,10 @@ export class EditUserDialogComponent {
 
   private readonly user: User = new User();
 
-  constructor (private formBuilder: FormBuilder,
-               private dialogRef: MatDialogRef<EditUserDialogComponent>,
-               @Inject(MAT_DIALOG_DATA) user: User) {
+  constructor(private formBuilder: FormBuilder,
+    private dialogRef: MatDialogRef<EditUserDialogComponent>,
+    private notificationService: NotificationService,
+    @Inject(MAT_DIALOG_DATA) user: User) {
     this.user = user;
   }
 
@@ -70,6 +72,18 @@ export class EditUserDialogComponent {
     user.activated = this.personalDataForm.get('activated')?.value;
     user.role = this.user.role;
     user.id = this.user.id;
+
+    let notification = new Notification();
+    notification.userId = user.id;
+    notification.description = `User ${user.username} edited personal data.`;
+    notification.published = new Date();
+    notification.type = 'UserFormEdited';
+
+    this.notificationService.addNotification(notification).subscribe(d => {
+      if (!isNaN(d)) {
+        console.log(d);
+      }
+    });
 
     this.dialogRef.close(user);
   }
