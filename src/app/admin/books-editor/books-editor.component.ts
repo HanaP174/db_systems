@@ -36,11 +36,8 @@ export class BooksEditorComponent implements OnInit {
     this.initDataSource();
   }
 
-  private initDataSource() {
-    this.bookService.getAllBooks().subscribe((books) => {
-      this.books = books;
-      this.dataSource.data = books;
-    });
+  logout() {
+    this.authService.logout();
   }
 
   applyFilter(event: Event) {
