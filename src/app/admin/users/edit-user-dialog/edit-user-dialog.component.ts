@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { Notification, User } from "../../../shared/model/LibraryModel";
+import {Notification, Option, User} from "../../../shared/model/LibraryModel";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { NotificationService } from 'src/app/shared/services/notification.service';
 
@@ -27,6 +27,9 @@ export class EditUserDialogComponent {
 
   personalDataForm: FormGroup = new FormGroup({});
   hide = true;
+  activatedOptions: Option[] = [
+    {value: false, viewValue: 'not activated'},
+    {value: true, viewValue: 'activated'}];
 
   private readonly user: User = new User();
 

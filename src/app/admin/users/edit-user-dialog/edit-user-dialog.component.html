@@ -78,9 +78,11 @@
       </div>
       <div class="col">
         <mat-form-field class="input-field" appearance="outline">
-          <mat-error *ngIf="personalDataForm.get('activated')?.hasError('required')">Account activation is required</mat-error>
+          <mat-error *ngIf="personalDataForm.get('activated')?.hasError('required')">Activated is required</mat-error>
           <mat-label>Activated</mat-label>
-          <input matInput formControlName="activated" required/>
+          <mat-select formControlName="activated">
+            <mat-option *ngFor="let option of activatedOptions" [value]="option.value">{{option.viewValue}}</mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
     </div>

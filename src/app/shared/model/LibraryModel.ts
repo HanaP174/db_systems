@@ -62,7 +62,10 @@ export class Notification {
 
 export enum NotificationType {
   NEW_ACCOUNT = 'NEW_ACCOUNT',
-  ACCOUNT_CHANGE = 'ACCOUNT_CHANGE',
-  APPROVED = 'APPROVED',
-  DECLINED = 'DECLINED' // toto sme asi mysleli pre usera aj s approved ale vyprdla by som sa na to
+  ACCOUNT_CHANGE = 'ACCOUNT_CHANGE'
+}
+
+export interface Option {
+  value: boolean;
+  viewValue: string;
 }

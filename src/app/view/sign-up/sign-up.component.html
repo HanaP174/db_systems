@@ -38,14 +38,14 @@
       <mat-form-field class="input-field" appearance="outline">
         <mat-error *ngIf="signUpForm.getError('birthNumber')?.hasError('required')">Birth number is required</mat-error>
         <mat-label>Birth number</mat-label>
-        <input matInput formControlName="birthNumber" required>
+        <input type="number" matInput formControlName="birthNumber" required>
       </mat-form-field>
     </div>
     <div class="col">
       <mat-form-field class="input-field" appearance="outline">
         <mat-error *ngIf="signUpForm.getError('zipcode')?.hasError('required')">Zipcode is required</mat-error>
         <mat-label>Zipcode</mat-label>
-        <input matInput formControlName="zipcode" required>
+        <input type="number" matInput formControlName="zipcode" required>
       </mat-form-field>
     </div>
   </div>

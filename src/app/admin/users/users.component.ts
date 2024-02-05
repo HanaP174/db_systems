@@ -12,6 +12,7 @@ import {
   UserBorrowingHistoryDialogComponent
 } from "./user-borrowing-history-dialog/user-borrowing-history-dialog.component";
 import {Router} from "@angular/router";
+import {AddUserDialogComponent} from "./add-user-dialog/add-user-dialog.component";
 
 export enum DialogType {
   EDIT = 'EDIT',
@@ -70,6 +71,20 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   home() {
     this.router.navigate(['/admin'])
+  }
+
+  addNewUser() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '85rem';
+
+    dialogConfig.disableClose = true;
+    const dialogOutput = this.dialog.open(AddUserDialogComponent, dialogConfig);
+
+    dialogOutput.afterClosed().subscribe(user => {
+      if (user) {
+        this.addUser(user);
+      }
+    });
   }
 
   private initDataSource() {
