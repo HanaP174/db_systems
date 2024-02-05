@@ -8,14 +8,17 @@ router.post("/notification/add", notificationController.add);
 // Retrieve all notifications
 router.get("/notification/list", notificationController.getAll);
 
+// Flag notifications in list as published
+router.put("/notification/publishList", notificationController.publishList);
+
 // Get a notification
-router.get("/book/:id", notificationController.get);
+router.get("/notification/:id", notificationController.get);
 
 // Edit a notification
-router.put("/user/:id", notificationController.update);
+router.put("/notification/:id", notificationController.update);
 
 // Delete a notification
-router.delete("/user/:id", notificationController.delete);
+router.delete("/notification/:id", notificationController.delete);
 
 
 module.exports = router;

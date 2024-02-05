@@ -45,8 +45,8 @@
       <mat-divider></mat-divider>
       <mat-selection-list>
         <mat-list-option *ngFor="let notification of editedAccounts"
-                         [value]="notification"
-                         (select)="onSelect($event, SelectedType.NEW, notification)">
+            [value]="notification"
+            (selectedChange)="onSelect($event, SelectedType.EDITED, notification)">
           {{notification.description}}
         </mat-list-option>
       </mat-selection-list>

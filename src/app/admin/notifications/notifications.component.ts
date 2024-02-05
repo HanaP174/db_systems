@@ -31,7 +31,7 @@ export class NotificationsComponent implements OnInit {
 
   ngOnInit() {
     this.notificationService.getAllNotifications().subscribe(response => {
-      this.notifications = response;
+      this.notifications = response.filter(n => !n.published);
       this.init();
     })
   }
@@ -45,7 +45,11 @@ export class NotificationsComponent implements OnInit {
       }
     }
     if (type === SelectionType.EDITED) {
-      this.selectedEdited.push(notification);
+      if (change) {
+        this.selectedEdited.push(notification);
+      } else {
+        this.selectedEdited.splice(this.selectedEdited.indexOf(notification), 1);
+      }
     }
   }
 
@@ -59,19 +63,35 @@ export class NotificationsComponent implements OnInit {
 
   approve(type: SelectionType) {
     if (type === SelectionType.NEW) {
-      // todo
+      this.notificationService.publishNotifications(this.selectedNew, true).subscribe(d => {
+        if (!isNaN(d) && Number(d) === this.selectedNew.length) {
+          this.selectedNew.forEach((sn) => this.newAccounts.splice(this.newAccounts.indexOf(sn)));
+        }
+      });
     }
     if (type === SelectionType.EDITED) {
-      // todo
+      this.notificationService.publishNotifications(this.selectedEdited, true).subscribe(d => {
+        if (!isNaN(d) && Number(d) === this.selectedEdited.length) {
+          this.selectedEdited.forEach((se) => this.editedAccounts.splice(this.editedAccounts.indexOf(se)));
+        }
+      });
     }
   }
 
   decline(type: SelectionType) {
     if (type === SelectionType.NEW) {
-      // todo
+      this.notificationService.publishNotifications(this.selectedNew, false).subscribe(d => {
+        if (!isNaN(d) && Number(d) === this.selectedNew.length) {
+          this.selectedNew.forEach((sn) => this.newAccounts.splice(this.newAccounts.indexOf(sn)));
+        }
+      });
     }
     if (type === SelectionType.EDITED) {
-      // todo
+      this.notificationService.publishNotifications(this.selectedEdited, false).subscribe(d => {
+        if (!isNaN(d) && Number(d) === this.selectedEdited.length) {
+          this.selectedEdited.forEach((se) => this.editedAccounts.splice(this.editedAccounts.indexOf(se)));
+        }
+      });
     }
   }
 

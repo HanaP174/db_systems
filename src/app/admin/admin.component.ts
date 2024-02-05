@@ -64,7 +64,7 @@ export class AdminComponent implements OnInit {
     });
     this.notificationService.getAllNotifications().subscribe(response => {
       if (response) {
-        this.notifications = response;
+        this.notifications = response.filter(n => !n.published);
       }
     })
   }
