@@ -11,6 +11,7 @@ import { BookService } from "../../shared/services/book.service";
 import {
   UserBorrowingHistoryDialogComponent
 } from "./user-borrowing-history-dialog/user-borrowing-history-dialog.component";
+import {Router} from "@angular/router";
 
 export enum DialogType {
   EDIT = 'EDIT',
@@ -36,7 +37,8 @@ export class UsersComponent implements OnInit, OnDestroy {
   constructor(private userService: UserService,
     private authService: AuthService,
     private dialog: MatDialog,
-    private bookService: BookService) {
+    private bookService: BookService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -64,6 +66,10 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   logout() {
     this.authService.logout();
+  }
+
+  home() {
+    this.router.navigate(['/admin'])
   }
 
   private initDataSource() {
@@ -175,6 +181,6 @@ export class UsersComponent implements OnInit, OnDestroy {
     dialogConfig.width = '85rem';
 
     dialogConfig.disableClose = true;
-    const dialogOutput = this.dialog.open(UserBorrowingHistoryDialogComponent, dialogConfig);
+    this.dialog.open(UserBorrowingHistoryDialogComponent, dialogConfig);
   }
 }

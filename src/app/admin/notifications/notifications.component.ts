@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NotificationService} from "../../shared/services/notification.service";
 import {Notification, NotificationType} from "../../shared/model/LibraryModel";
 import {AuthService} from "../../shared/services/auth-service";
+import {Router} from "@angular/router";
 
 export enum SelectionType {
   NEW = 'NEW',
@@ -24,7 +25,8 @@ export class NotificationsComponent implements OnInit {
   readonly SelectedType = SelectionType;
 
   constructor(private notificationService: NotificationService,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private router: Router) {
 }
 
   ngOnInit() {
@@ -49,6 +51,10 @@ export class NotificationsComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+  }
+
+  home() {
+    this.router.navigate(['/admin'])
   }
 
   approve(type: SelectionType) {

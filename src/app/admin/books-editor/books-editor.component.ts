@@ -8,6 +8,7 @@ import {ConfirmDeleteComponent} from "../../shared/components/confirm-delete-use
 import {AddBookDialogComponent} from "./add-book-dialog/add-book-dialog.component";
 import {WarningDialogComponent} from "../../shared/components/warning-dialog/warning-dialog.component";
 import {EditBookDialogComponent} from "./edit-book-dialog/edit-book-dialog.component";
+import {Router} from "@angular/router";
 
 export enum DialogType {
   EDIT = 'EDIT',
@@ -30,7 +31,8 @@ export class BooksEditorComponent implements OnInit {
 
   constructor(private authService: AuthService,
               private bookService: BookService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -39,6 +41,10 @@ export class BooksEditorComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+  }
+
+  home() {
+    this.router.navigate(['/admin'])
   }
 
   applyFilter(event: Event) {
