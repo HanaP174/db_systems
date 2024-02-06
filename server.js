@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const scheduler = require("node-schedule");
+scheduledTask = require("./src/app/shared/model/libraryTask.model");
 
 const app = express();
 
@@ -34,6 +36,14 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   next();
 })
+
+scheduler.scheduleJob('1 0 * * *', async () => {
+  try {
+    await scheduledTask.checkAndReturnOverdueBooks();
+  } catch (error) {
+    console.error('Error executing daily task:', error);
+  }
+});
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
