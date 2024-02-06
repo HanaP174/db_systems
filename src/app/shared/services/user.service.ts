@@ -13,6 +13,7 @@ export class UserService {
   constructor(private httpClient: HttpClient) { }
 
   public addUser(user: User): Observable<any> {
+    user.password = btoa(user.password);
     const apirUrl = `${this.API_BASE}/user/add`;
 
     return this.httpClient.post(apirUrl, user);

@@ -29,11 +29,12 @@ export class AuthService {
               private router: Router) {}
 
   signUpUser(user: User) {
+    user.password = btoa(user.password);
     this.httpClient.post('http://localhost:8080/api/library/user/add', user).subscribe((user: any) => {
       if (user) {
         const notification = new Notification();
         notification.userId = user.id;
-        notification.description = `A new user ${user.username} completed the signup form.`;
+        notification.description = `A new user ${user.id} completed the signup form.`;
         notification.type = NotificationType.NEW_ACCOUNT;
 
         this.httpClient.post('http://localhost:8080/api/library/notification/add', notification).subscribe((d: any) => {
@@ -46,7 +47,7 @@ export class AuthService {
   }
 
   loginUser(username: string, password: string) {
-    const user: UserAuth = {username: username, password: password};
+    const user: UserAuth = {username: username, password: btoa(password)};
 
     this.httpClient.post<{token: string, expiresIn: number, user: User}>('http://localhost:8080/api/library/user/login', user).subscribe(response => {
       this._token = response.token;
