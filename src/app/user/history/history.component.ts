@@ -44,6 +44,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
 
     this.dataSubscription = data$.subscribe(([books, borrowedBooks]: [Book[], BorrowedBook[]]) => {
       this.userBorrowedBooks = borrowedBooks;
+      books = this.bookService.convertCover(books);
       borrowedBooks.forEach((borrowedBook) => {
         const book = books.find(b => b.id === borrowedBook.bookId);
 

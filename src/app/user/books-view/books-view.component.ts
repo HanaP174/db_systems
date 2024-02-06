@@ -30,8 +30,9 @@ export class BooksViewComponent implements OnInit {
 
   private initDataSource() {
     this.bookService.getAllBooks().subscribe((books) => {
-      this.books = books;
-      this.dataSource.data = books;
+      this.books = this.bookService.convertCover(books);
+      this.dataSource.data = this.books;
+      this.dataSource.data.forEach(book => console.log(book.cover));
     });
 
     const userId = this.authService.user.id;

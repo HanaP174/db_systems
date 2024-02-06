@@ -18,10 +18,10 @@ export class BookService {
     return this.httpClient.post(apirUrl, book);
   }
 
-  public getAllBooks(): Observable<Book[]> {
+  public getAllBooks(): Observable<any[]> {
     const apiUrl = `${this.API_BASE}/book/list`;
 
-    return this.httpClient.get<Book[]>(apiUrl);
+    return this.httpClient.get<any[]>(apiUrl);
   }
 
   public getBook(bookId: string): Observable<Book> {
@@ -52,5 +52,12 @@ export class BookService {
     const apirUrl = `${this.API_BASE}/book/userBorrowed/${userId}`;
 
     return this.httpClient.get<BorrowedBook[]>(apirUrl);
+  }
+
+  public convertCover(books: any[]) {
+    books.forEach(book => {
+      book.cover = atob(book.cover);
+    });
+    return books;
   }
 }

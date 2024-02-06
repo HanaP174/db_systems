@@ -28,3 +28,9 @@
 .book-row {
   cursor: pointer;
 }
+
+.image {
+  width: 5rem;
+  height: 5rem;
+  border: solid black;
+}

@@ -19,3 +19,9 @@
   padding-right: 3rem;
   padding-top: 1.5rem;
 }
+
+.image {
+  width: 5rem;
+  height: 5rem;
+  border: solid black;
+}

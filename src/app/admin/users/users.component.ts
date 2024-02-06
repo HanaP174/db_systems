@@ -170,6 +170,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     ]).pipe(catchError((error) => of(error)));
 
     this.subscription = data$.subscribe(([books, borrowedBooks]: [Book[], BorrowedBook[]]) => {
+      books = this.bookService.convertCover(books);
       borrowedBooks.forEach((borrowedBook) => {
         const book = books.find(b => b.id === borrowedBook.bookId);
 

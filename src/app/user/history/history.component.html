@@ -26,7 +26,7 @@
       <!-- Cover Column -->
       <ng-container matColumnDef="cover">
         <th mat-header-cell *matHeaderCellDef> Cover </th>
-        <td mat-cell *matCellDef="let element"><img src="{{'data:image/jpg;base64,' + element.cover}}" alt="Image"></td>
+        <td mat-cell *matCellDef="let element"><img [src]="element.cover" alt="Image"></td>
       </ng-container>
 
       <!-- Title Column -->
