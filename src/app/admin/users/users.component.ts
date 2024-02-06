@@ -4,7 +4,7 @@ import { Book, BorrowedBook, BorrowedBookModel, User } from "../../shared/model/
 import { UserService } from "../../shared/services/user.service";
 import { AuthService } from "../../shared/services/auth-service";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
-import { ConfirmDeleteComponent } from "../../shared/components/confirm-delete-user/confirm-delete.component";
+import { ConfirmDialogComponent } from "../../shared/components/confirm-dialog/confirm-dialog.component";
 import { EditUserDialogComponent } from "./edit-user-dialog/edit-user-dialog.component";
 import { catchError, forkJoin, of, Subscription } from "rxjs";
 import { BookService } from "../../shared/services/book.service";
@@ -98,7 +98,6 @@ export class UsersComponent implements OnInit, OnDestroy {
     return users.filter(user => user.id != this.authService.user.id);
   }
 
-  // TODO Get user from a form
   private addUser(user: User) {
     this.userService.addUser(user).subscribe(d => {
       if (isNaN(d)) {
@@ -115,7 +114,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     dialogConfig.data = 'Are you sure you want to delete user?';
 
     dialogConfig.disableClose = true;
-    const dialogOutput = this.dialog.open(ConfirmDeleteComponent, dialogConfig);
+    const dialogOutput = this.dialog.open(ConfirmDialogComponent, dialogConfig);
 
     dialogOutput.afterClosed().subscribe(shouldDelete => {
       if (shouldDelete) {

@@ -4,11 +4,12 @@ import { MatTableDataSource } from "@angular/material/table";
 import { AuthService } from "../../shared/services/auth-service";
 import { BookService } from "../../shared/services/book.service";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {ConfirmDeleteComponent} from "../../shared/components/confirm-delete-user/confirm-delete.component";
+import {ConfirmDialogComponent} from "../../shared/components/confirm-dialog/confirm-dialog.component";
 import {AddBookDialogComponent} from "./add-book-dialog/add-book-dialog.component";
 import {WarningDialogComponent} from "../../shared/components/warning-dialog/warning-dialog.component";
 import {EditBookDialogComponent} from "./edit-book-dialog/edit-book-dialog.component";
 import {Router} from "@angular/router";
+import {BorrowBookDialogComponent} from "./borrow-book-dialog/borrow-book-dialog.component";
 
 export enum DialogType {
   EDIT = 'EDIT',
@@ -58,6 +59,7 @@ export class BooksEditorComponent implements OnInit {
     } else if (dialogType === DialogType.EDIT) {
       this.editBook(book);
     } else if (dialogType === DialogType.BORROW) {
+      this.handleBorrow(book);
     }
   }
 
@@ -115,7 +117,7 @@ export class BooksEditorComponent implements OnInit {
     dialogConfig.data = 'Are you sure you want to delete this book?';
 
     dialogConfig.disableClose = true;
-    const dialogOutput = this.dialog.open(ConfirmDeleteComponent, dialogConfig);
+    const dialogOutput = this.dialog.open(ConfirmDialogComponent, dialogConfig);
 
     dialogOutput.afterClosed().subscribe(shouldDelete => {
       if (shouldDelete) {
@@ -153,5 +155,14 @@ export class BooksEditorComponent implements OnInit {
         }
       });
     }
+  }
+
+  private handleBorrow(book: Book) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = book;
+    dialogConfig.width = '85rem';
+
+    dialogConfig.disableClose = true;
+    this.dialog.open(BorrowBookDialogComponent, dialogConfig);
   }
 }

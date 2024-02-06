@@ -3,13 +3,13 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-confirm-delete-user',
-  templateUrl: './confirm-delete.component.html',
-  styleUrls: ['./confirm-delete.component.css']
+  templateUrl: './confirm-dialog.component.html',
+  styleUrls: ['./confirm-dialog.component.css']
 })
-export class ConfirmDeleteComponent {
+export class ConfirmDialogComponent {
 
   title: string = '';
-  constructor(private dialogRef: MatDialogRef<ConfirmDeleteComponent>,
+  constructor(private dialogRef: MatDialogRef<ConfirmDialogComponent>,
               @Inject(MAT_DIALOG_DATA) title: string) {
     this.title = title;
   }
@@ -18,7 +18,7 @@ export class ConfirmDeleteComponent {
     this.dialogRef.close(false);
   }
 
-  delete() {
+  confirm() {
     this.dialogRef.close(true);
   }
 }

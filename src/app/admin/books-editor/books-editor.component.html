@@ -70,7 +70,7 @@
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="openDialog(row, DialogType.EDIT)">Edit</button>
           <button mat-menu-item (click)="openDialog(row, DialogType.DELETE)">Delete</button>
-          <button mat-menu-item (click)="openDialog(row, DialogType.BORROW)">Borrow for user</button>
+          <button *ngIf="row.availableCopies > 0" mat-menu-item (click)="openDialog(row, DialogType.BORROW)">Borrow for user</button>
         </mat-menu>
       </tr>
 

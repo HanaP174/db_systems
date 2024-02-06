@@ -1,0 +1,11 @@
+.filter {
+  width: 100%;
+}
+
+.spinner {
+  margin: auto;
+}
+
+.user-row {
+  cursor: pointer;
+}

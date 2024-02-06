@@ -25,7 +25,7 @@ import { NotificationsComponent } from './admin/notifications/notifications.comp
 import { BooksEditorComponent } from './admin/books-editor/books-editor.component';
 import { UsersComponent } from './admin/users/users.component';
 import {MatDialogModule} from "@angular/material/dialog";
-import { ConfirmDeleteComponent } from './shared/components/confirm-delete-user/confirm-delete.component';
+import { ConfirmDialogComponent } from './shared/components/confirm-dialog/confirm-dialog.component';
 import { EditUserDialogComponent } from './admin/users/edit-user-dialog/edit-user-dialog.component';
 import { PersonalDataComponent } from './user/personal-data/personal-data.component';
 import { UserBorrowingHistoryDialogComponent } from './admin/users/user-borrowing-history-dialog/user-borrowing-history-dialog.component';
@@ -36,11 +36,13 @@ import { WarningDialogComponent } from './shared/components/warning-dialog/warni
 import {MatListModule} from "@angular/material/list";
 import { AddUserDialogComponent } from './admin/users/add-user-dialog/add-user-dialog.component';
 import {MatSelectModule} from "@angular/material/select";
+import { BorrowBookDialogComponent } from './admin/books-editor/borrow-book-dialog/borrow-book-dialog.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
-  declarations: [AppComponent, SignUpComponent, HomePageComponent, HeaderComponent, UserComponent, AdminComponent, BooksViewComponent, HistoryComponent, NotificationsComponent, BooksEditorComponent, UsersComponent, ConfirmDeleteComponent, EditUserDialogComponent, PersonalDataComponent, UserBorrowingHistoryDialogComponent, ImageInputComponent, AddBookDialogComponent, EditBookDialogComponent, WarningDialogComponent, AddUserDialogComponent],
+  declarations: [AppComponent, SignUpComponent, HomePageComponent, HeaderComponent, UserComponent, AdminComponent, BooksViewComponent, HistoryComponent, NotificationsComponent, BooksEditorComponent, UsersComponent, ConfirmDialogComponent, EditUserDialogComponent, PersonalDataComponent, UserBorrowingHistoryDialogComponent, ImageInputComponent, AddBookDialogComponent, EditBookDialogComponent, WarningDialogComponent, AddUserDialogComponent, BorrowBookDialogComponent],
   imports: [BrowserModule, AppRoutingModule, MatIconModule, BrowserAnimationsModule,
-    HttpClientModule, MatCardModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButtonModule, MatMenuModule, MatProgressBarModule, MatTableModule, MatBadgeModule, MatDialogModule, MatListModule, MatSelectModule, FormsModule],
+    HttpClientModule, MatCardModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButtonModule, MatMenuModule, MatProgressBarModule, MatTableModule, MatBadgeModule, MatDialogModule, MatListModule, MatSelectModule, FormsModule, MatProgressSpinnerModule],
   providers: [],
   exports: [
     HeaderComponent
