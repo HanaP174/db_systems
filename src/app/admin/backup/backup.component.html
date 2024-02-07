@@ -37,12 +37,15 @@
       <mat-card-subtitle>Import data if You feel that something went wrong.</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <mat-divider></mat-divider>
-      <p>No export to show</p>
-      <mat-divider></mat-divider>
+      <mat-divider class="top-divider"></mat-divider>
+      <span class="fw-bold" *ngIf="importSuccessful">Import was successful!</span>
+      <app-upload-file
+          (submitFile)="uploadedFile = $event">
+      </app-upload-file>
     </mat-card-content>
-    <mat-card-actions align="start">
-      <button mat-raised-button color="primary">Do import</button>
+    <mat-divider></mat-divider>
+    <mat-card-actions align="end">
+      <button mat-raised-button color="primary" (click)="import()">Do import</button>
     </mat-card-actions>
   </mat-card>
 </div>

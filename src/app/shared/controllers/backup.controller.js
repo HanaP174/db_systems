@@ -24,3 +24,29 @@ exports.get = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 }
+
+exports.post = async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No file uploaded' });
+  }
+
+  const importFileBuffer = req.file.buffer;
+
+  try {
+    const importedData = JSON.parse(importFileBuffer.toString());
+
+    await User.deleteMany();
+    await Book.deleteMany();
+    await BorrowedBook.deleteMany();
+    await Notification.deleteMany();
+
+    await User.insertMany(importedData.users);
+    await Book.insertMany(importedData.books);
+    await BorrowedBook.insertMany(importedData.borrowedBooks);
+    await Notification.insertMany(importedData.notifications);
+
+    res.json({ message: 'Data imported successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}

@@ -16,4 +16,13 @@ export class BackupService {
     return this.httpClient.get(apiUrl);
   }
 
+  public import(file: File): Observable<any> {
+    const apiUrl = `${this.API_BASE}/backup/import`;
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.httpClient.post(apiUrl, formData);
+  }
+
 }

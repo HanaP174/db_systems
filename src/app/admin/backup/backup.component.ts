@@ -13,6 +13,8 @@ export class BackupComponent {
   exportedData: any;
   exportText: string = 'No export to show';
   exportButtonText: string = 'Do export';
+  uploadedFile: File = new File([], '');
+  importSuccessful = false;
 
   constructor(private router: Router,
               private authService: AuthService,
@@ -48,5 +50,14 @@ export class BackupComponent {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+  }
+
+  import() {
+    this.backupService.import(this.uploadedFile).subscribe(res => {
+      if (res.message === 'Data imported successfully') {
+        this.importSuccessful = true;
+        this.uploadedFile = new File([], '');
+      }
+    });
   }
 }
