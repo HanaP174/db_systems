@@ -43,6 +43,10 @@ export class AdminComponent implements OnInit {
     this.router.navigate(['/library']);
   }
 
+  openBackup() {
+    this.router.navigate(['/backup']);
+  }
+
   getNotificationDescription(notification: Notification) {
     switch (notification.type) {
       case NotificationType.NEW_ACCOUNT:

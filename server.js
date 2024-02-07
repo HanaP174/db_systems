@@ -25,10 +25,12 @@ app.get('/alive', (req, res) => {
 const routesBook = require("./src/app/shared/routes/book.routes");
 const routesUser = require("./src/app/shared/routes/user.routes");
 const routesNotification = require("./src/app/shared/routes/notification.routes");
+const routesBackup = require("./src/app/shared/routes/backup.routes");
 
 app.use('/api/library', routesBook);
 app.use('/api/library', routesUser);
 app.use('/api/library', routesNotification);
+app.use('/api/library', routesBackup);
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');

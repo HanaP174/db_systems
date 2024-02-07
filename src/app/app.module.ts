@@ -38,9 +38,11 @@ import { AddUserDialogComponent } from './admin/users/add-user-dialog/add-user-d
 import {MatSelectModule} from "@angular/material/select";
 import { BorrowBookDialogComponent } from './admin/books-editor/borrow-book-dialog/borrow-book-dialog.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { BackupComponent } from './admin/backup/backup.component';
+import { UploadFileComponent } from './admin/backup/upload-file/upload-file.component';
 
 @NgModule({
-  declarations: [AppComponent, SignUpComponent, HomePageComponent, HeaderComponent, UserComponent, AdminComponent, BooksViewComponent, HistoryComponent, NotificationsComponent, BooksEditorComponent, UsersComponent, ConfirmDialogComponent, EditUserDialogComponent, PersonalDataComponent, UserBorrowingHistoryDialogComponent, ImageInputComponent, AddBookDialogComponent, EditBookDialogComponent, WarningDialogComponent, AddUserDialogComponent, BorrowBookDialogComponent],
+  declarations: [AppComponent, SignUpComponent, HomePageComponent, HeaderComponent, UserComponent, AdminComponent, BooksViewComponent, HistoryComponent, NotificationsComponent, BooksEditorComponent, UsersComponent, ConfirmDialogComponent, EditUserDialogComponent, PersonalDataComponent, UserBorrowingHistoryDialogComponent, ImageInputComponent, AddBookDialogComponent, EditBookDialogComponent, WarningDialogComponent, AddUserDialogComponent, BorrowBookDialogComponent, BackupComponent, UploadFileComponent],
   imports: [BrowserModule, AppRoutingModule, MatIconModule, BrowserAnimationsModule,
     HttpClientModule, MatCardModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule, MatButtonModule, MatMenuModule, MatProgressBarModule, MatTableModule, MatBadgeModule, MatDialogModule, MatListModule, MatSelectModule, FormsModule, MatProgressSpinnerModule],
   providers: [],

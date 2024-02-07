@@ -14,25 +14,19 @@
   padding-bottom: 3rem;
 }
 
-.admin-card {
+.backup-card {
   width: 30%;
   cursor: pointer;
 }
 
-.person-row {
-  display: flex;
-  align-items: flex-end;
+.mat-mdc-card-avatar {
+  border-radius: 0;
 }
 
-.person-info {
-  padding-left: 1rem;
-}
-
-.backup-button-wrapper {
-  width: 80%;
-  margin: auto;
-}
-
-.backup-button {
+.content {
+  height: 5rem;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

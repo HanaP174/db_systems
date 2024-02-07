@@ -1,0 +1,48 @@
+<app-header>
+  <button class="menu-button" mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>logout</span>
+    </button>
+    <button mat-menu-item (click)="home()">
+      <mat-icon>home</mat-icon>
+      <span>home</span>
+    </button>
+  </mat-menu>
+</app-header>
+
+<div class="options">
+  <mat-card class="backup-card" >
+    <mat-card-header>
+      <mat-icon mat-card-avatar>system_update_alt</mat-icon>
+      <mat-card-title>Export</mat-card-title>
+      <mat-card-subtitle>Export all data from Universe and create backup.</mat-card-subtitle>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content class="content">
+      <p>{{this.exportText}}</p>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-card-actions align="end">
+      <button mat-raised-button color="primary" (click)="this.exportedData == null ? export() : downloadFile()">{{this.exportButtonText}}</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="backup-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>publish</mat-icon>
+      <mat-card-title>Import</mat-card-title>
+      <mat-card-subtitle>Import data if You feel that something went wrong.</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-divider></mat-divider>
+      <p>No export to show</p>
+      <mat-divider></mat-divider>
+    </mat-card-content>
+    <mat-card-actions align="start">
+      <button mat-raised-button color="primary">Do import</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

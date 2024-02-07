@@ -9,6 +9,7 @@ import {NotificationsComponent} from "./admin/notifications/notifications.compon
 import {UsersComponent} from "./admin/users/users.component";
 import {PersonalDataComponent} from "./user/personal-data/personal-data.component";
 import {BooksEditorComponent} from "./admin/books-editor/books-editor.component";
+import {BackupComponent} from "./admin/backup/backup.component";
 
 const routes: Routes = [
   {path: '', component:HomePageComponent},
@@ -19,7 +20,8 @@ const routes: Routes = [
   {path: 'notifications', component:NotificationsComponent},
   {path: 'users', component:UsersComponent},
   {path: 'person-page', component:PersonalDataComponent},
-  {path: 'library', component:BooksEditorComponent}
+  {path: 'library', component:BooksEditorComponent},
+  {path: 'backup', component:BackupComponent}
 ];
 
 @NgModule({
