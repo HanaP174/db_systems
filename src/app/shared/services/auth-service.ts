@@ -55,7 +55,6 @@ export class AuthService {
         this.authenticatedSub.next(true);
         this._isAuthenticated = true;
         this._user = response.user;
-        console.log(this._user);
         this.navigate();
         this.logoutTimer = setTimeout(() => {this.logout()}, response.expiresIn * 1000);
         const now = new Date();
