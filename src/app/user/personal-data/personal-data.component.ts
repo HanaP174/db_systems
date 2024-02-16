@@ -71,18 +71,19 @@ export class PersonalDataComponent implements OnInit {
     this.userService.updateUser(this.user.id, user).subscribe(d => {
       if (!isNaN(d)) {
         this.user = user;
-      
+        this.authService.user.activated = false;
+
         let notification = new Notification();
         notification.userId = this.user.id;
         notification.description = `User with id ${this.user.id} edited personal data.`;
         notification.type = NotificationType.ACCOUNT_CHANGE;
-    
+
         this.notificationService.addNotification(notification).subscribe(d => {
           if (!isNaN(d)) {
             console.log(d);
           }
+          this.router.navigate(['/home']);
         });
-        this.notificationService.addNotification
       } else {
         console.log(d.message);
       }
