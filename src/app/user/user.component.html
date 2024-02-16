@@ -7,11 +7,11 @@
       <mat-icon>logout</mat-icon>
       <span>logout</span>
     </button>
-    <button mat-menu-item (click)="history()">
+    <button *ngIf="user.activated" mat-menu-item (click)="history()">
       <mat-icon>history</mat-icon>
       <span>history</span>
     </button>
-    <button mat-menu-item (click)="personPage()">
+    <button *ngIf="user.activated" mat-menu-item (click)="personPage()">
       <mat-icon>manage_accounts</mat-icon>
       <span>personal data</span>
     </button>
